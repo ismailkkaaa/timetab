@@ -65,11 +65,11 @@ const Notification = (() => {
     const isLunch = period.type === 'lunch';
 
     if (isBreak) {
-      show('☕ Break Time', `Break until ${period.end}`);
+      show('Break Time', `Break until ${period.end}`);
     } else if (isLunch) {
-      show('🍽 Lunch Break', `Lunch until ${period.end}`);
+      show('Lunch Break', `Lunch until ${period.end}`);
     } else {
-      show(`📚 ${period.subject} Started`, `With ${period.teacher} · ${period.start}–${period.end}${period.room ? ' · ' + period.room : ''}`);
+      show(`${period.subject} Started`, `With ${period.teacher} · ${period.start}–${period.end}${period.room ? ' · ' + period.room : ''}`);
     }
   }
 
@@ -79,7 +79,7 @@ const Notification = (() => {
     _notifiedFive.add(period.id);
 
     if (period.type) return; // Skip break/lunch warnings
-    show(`⏰ ${period.subject} in 5 min`, `${period.teacher} · ${period.start}${period.room ? ' · ' + period.room : ''}`);
+    show(`${period.subject} in 5 min`, `${period.teacher} · ${period.start}${period.room ? ' · ' + period.room : ''}`);
   }
 
   /** Enable or disable notifications — handles permission flow */

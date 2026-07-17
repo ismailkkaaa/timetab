@@ -6,6 +6,7 @@ import Storage     from './storage.js';
 import Timer       from './timer.js';
 import Timetable   from './timetable.js';
 import Notification from './notification.js';
+import Icons       from './icons.js';
 
 const App = (() => {
   let _currentView = 'home';
@@ -62,7 +63,7 @@ const App = (() => {
     const container = document.getElementById('timetable-container');
     if (!container) return;
 
-    container.innerHTML = `<div class="empty-state"><div class="empty-state__icon">⏳</div><div class="empty-state__title">Loading…</div></div>`;
+    container.innerHTML = `<div class="empty-state"><div class="empty-state__icon">${Icons.svg('timer', 40, 1.75)}</div><div class="empty-state__title">Loading…</div></div>`;
     const data = await Timetable.load();
     Timetable.render(data, container);
     _timetableLoaded = true;
@@ -88,9 +89,9 @@ const App = (() => {
         const ok = await Notification.setEnabled(e.target.checked);
         if (!ok) {
           notifToggle.checked = false;
-          showToast('⚠ Notification permission denied');
+          showToast('Notification permission denied');
         } else {
-          showToast(e.target.checked ? '🔔 Notifications enabled' : '🔕 Notifications disabled');
+          showToast(e.target.checked ? 'Notifications enabled' : 'Notifications disabled');
         }
       });
     }
@@ -101,7 +102,7 @@ const App = (() => {
       soundToggle.checked = Storage.get('notificationSound');
       soundToggle.addEventListener('change', (e) => {
         Storage.set('notificationSound', e.target.checked);
-        showToast(e.target.checked ? '🔊 Sound on' : '🔇 Sound off');
+        showToast(e.target.checked ? 'Sound on' : 'Sound off');
       });
     }
   }

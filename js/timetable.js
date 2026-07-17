@@ -3,6 +3,7 @@
    ============================================================ */
 
 import Storage from './storage.js';
+import Icons from './icons.js';
 
 const Timetable = (() => {
   const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
@@ -46,7 +47,7 @@ const Timetable = (() => {
   /** Render the full weekly timetable view into #timetable-view */
   function render(data, container) {
     if (!data) {
-      container.innerHTML = `<div class="empty-state"><div class="empty-state__icon">📅</div><div class="empty-state__title">No timetable found</div><div class="empty-state__body">Check that timetable.json is present.</div></div>`;
+      container.innerHTML = `<div class="empty-state"><div class="empty-state__icon">${Icons.svg('calendar', 40, 1.75)}</div><div class="empty-state__title">No timetable found</div><div class="empty-state__body">Check that timetable.json is present.</div></div>`;
       return;
     }
 
@@ -94,7 +95,7 @@ const Timetable = (() => {
       });
 
       if (periods.length === 0) {
-        grid.innerHTML = `<div class="tt-free-day"><span>🎉</span> No classes — free day!</div>`;
+        grid.innerHTML = `<div class="tt-free-day">${Icons.svg('star', 14, 2.25)} No classes — free day!</div>`;
       }
 
       section.appendChild(grid);

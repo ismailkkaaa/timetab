@@ -24,6 +24,53 @@
   <link rel="stylesheet" href="./css/brutal.css">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/landing.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* Icon alignment in feature cards */
+    .feature-card__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: var(--border-base);
+      margin-bottom: var(--sp-4);
+      color: var(--color-dark);
+    }
+    .feature-card__icon .lucide-icon { display: block; }
+
+    /* Preview nav icons */
+    .preview-nav-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+    }
+    .preview-nav-icon--active { color: #2563EB; }
+
+    /* Inline icon + text alignment */
+    .icon-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    /* Install/CTA icon buttons */
+    .b-btn .lucide-icon {
+      flex-shrink: 0;
+    }
+
+    /* Lucide icon base — inherit color, no fill */
+    .lucide-icon {
+      display: inline-block;
+      vertical-align: middle;
+      stroke: currentColor;
+      fill: none;
+    }
+  </style>
 </head>
 
 <body class="landing-body">
@@ -49,24 +96,24 @@
     <!-- CTA -->
     <div class="hero__cta">
       <button
-        class="b-btn b-btn--primary b-btn--lg hero__install-btn"
+        class="b-btn b-btn--primary b-btn--lg hero__install-btn icon-text"
         id="install-btn"
         type="button"
         aria-label="Install TimeTab App"
       >
-        ⬇ Install App
+        <i data-lucide="download" style="width:20px;height:20px;stroke-width:2.25" aria-hidden="true"></i>
+        Install App
       </button>
-      <a href="./app.html" class="b-btn" id="open-app-btn" aria-label="Open Web App">
-        Open Web App →
+      <a href="./app.html" class="b-btn icon-text" id="open-app-btn" aria-label="Open Web App">
+        Open Web App
+        <i data-lucide="arrow-right" style="width:18px;height:18px;stroke-width:2.25" aria-hidden="true"></i>
       </a>
       <span class="hero__note">Works offline after first load</span>
     </div>
 
     <!-- Scroll indicator -->
     <div class="hero__scroll" aria-hidden="true">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
+      <i data-lucide="arrow-down" style="width:16px;height:16px;stroke-width:2.25"></i>
       Scroll
     </div>
 
@@ -84,42 +131,54 @@
 
         <div class="feature-card" id="feat-offline">
           <div class="feature-card__accent"></div>
-          <div class="feature-card__icon">📡</div>
+          <div class="feature-card__icon">
+            <i data-lucide="wifi-off" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
+          </div>
           <div class="feature-card__title">100% Offline</div>
           <div class="feature-card__body">Works without internet after install. Your timetable is always there, even in dead zones.</div>
         </div>
 
         <div class="feature-card" id="feat-countdown">
           <div class="feature-card__accent" style="background:#7C3AED"></div>
-          <div class="feature-card__icon">⏱</div>
+          <div class="feature-card__icon" style="border-color:#7C3AED; color:#7C3AED">
+            <i data-lucide="timer" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
+          </div>
           <div class="feature-card__title">Live Countdown</div>
           <div class="feature-card__body">Second-by-second countdown for every period. Know exactly how long till the bell rings.</div>
         </div>
 
         <div class="feature-card" id="feat-bell">
           <div class="feature-card__accent" style="background:#059669"></div>
-          <div class="feature-card__icon">🔔</div>
+          <div class="feature-card__icon" style="border-color:#059669; color:#059669">
+            <i data-lucide="bell" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
+          </div>
           <div class="feature-card__title">Bell Reminders</div>
           <div class="feature-card__body">Get notified 5 minutes before class and when a period starts. Never miss a lecture.</div>
         </div>
 
         <div class="feature-card" id="feat-fast">
           <div class="feature-card__accent" style="background:#F59E0B"></div>
-          <div class="feature-card__icon">⚡</div>
+          <div class="feature-card__icon" style="border-color:#F59E0B; color:#F59E0B">
+            <i data-lucide="zap" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
+          </div>
           <div class="feature-card__title">Instant Launch</div>
           <div class="feature-card__body">Opens in under a second. No login. No loading. No backend. Pure native speed.</div>
         </div>
 
         <div class="feature-card" id="feat-dark">
           <div class="feature-card__accent" style="background:#111111"></div>
-          <div class="feature-card__icon">🌙</div>
+          <div class="feature-card__icon" style="border-color:#111111; color:#111111">
+            <i data-lucide="moon" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
+          </div>
           <div class="feature-card__title">Dark Mode</div>
           <div class="feature-card__body">Easy on the eyes. Persisted across sessions so it's always exactly how you left it.</div>
         </div>
 
         <div class="feature-card" id="feat-pwa">
           <div class="feature-card__accent" style="background:#DC2626"></div>
-          <div class="feature-card__icon">📱</div>
+          <div class="feature-card__icon" style="border-color:#DC2626; color:#DC2626">
+            <i data-lucide="smartphone" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
+          </div>
           <div class="feature-card__title">Native App Feel</div>
           <div class="feature-card__body">Install to home screen. Fullscreen experience. No app store. No updates.</div>
         </div>
@@ -162,11 +221,17 @@
               <div class="preview-screen__subject" style="font-size:0.75rem">Physics · 11:00</div>
             </div>
 
-            <!-- Nav bar -->
+            <!-- Nav bar — Lucide icons -->
             <div style="display:flex; justify-content:space-around; border-top:1px solid #333; padding-top:6px; margin-top:auto">
-              <span style="font-size:1rem">🏠</span>
-              <span style="font-size:1rem">📅</span>
-              <span style="font-size:1rem">⚙️</span>
+              <span class="preview-nav-icon preview-nav-icon--active">
+                <i data-lucide="house" style="width:16px;height:16px;stroke-width:2.25"></i>
+              </span>
+              <span class="preview-nav-icon">
+                <i data-lucide="calendar" style="width:16px;height:16px;stroke-width:2.25"></i>
+              </span>
+              <span class="preview-nav-icon">
+                <i data-lucide="settings" style="width:16px;height:16px;stroke-width:2.25"></i>
+              </span>
             </div>
           </div>
         </div>
@@ -216,8 +281,9 @@
       </div>
 
       <div style="text-align:center; margin-top:var(--sp-10)">
-        <button class="b-btn b-btn--primary b-btn--lg" id="install-btn-2" type="button" onclick="document.getElementById('install-btn').click()">
-          ⬇ Install Now
+        <button class="b-btn b-btn--primary b-btn--lg icon-text" id="install-btn-2" type="button" onclick="document.getElementById('install-btn').click()">
+          <i data-lucide="download" style="width:20px;height:20px;stroke-width:2.25" aria-hidden="true"></i>
+          Install Now
         </button>
       </div>
 
@@ -231,7 +297,10 @@
     <div class="footer__inner">
       <div class="footer__brand">Time<span>Tab</span></div>
       <div class="footer__meta">V1.0 · 2026 · Offline Student Timetable PWA</div>
-      <a href="#how-to-install" class="footer__link">How to Install</a>
+      <a href="#how-to-install" class="footer__link icon-text">
+        <i data-lucide="download" style="width:14px;height:14px;stroke-width:2.25" aria-hidden="true"></i>
+        How to Install
+      </a>
     </div>
   </footer>
 
@@ -241,8 +310,13 @@
   <div class="modal-backdrop hidden" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal">
       <div class="modal__header">
-        <h2 class="modal__title" id="modal-title">📱 How to Install</h2>
-        <button class="b-btn b-btn--icon" id="modal-close" aria-label="Close">✕</button>
+        <h2 class="modal__title icon-text" id="modal-title">
+          <i data-lucide="smartphone" style="width:20px;height:20px;stroke-width:2.25" aria-hidden="true"></i>
+          How to Install
+        </h2>
+        <button class="b-btn b-btn--icon" id="modal-close" aria-label="Close">
+          <i data-lucide="x" style="width:18px;height:18px;stroke-width:2.5" aria-hidden="true"></i>
+        </button>
       </div>
       <p style="font-size:0.875rem; color:var(--color-muted); margin-bottom:var(--sp-4)">
         Follow these steps to install TimeTab on your device:
@@ -251,21 +325,21 @@
         <!-- Filled dynamically by install.js -->
       </div>
       <div style="margin-top:var(--sp-6)">
-        <a href="./app.html" class="b-btn b-btn--primary w-full" style="width:100%; justify-content:center" id="modal-open-web">
-          Open in Browser Instead →
+        <a href="./app.html" class="b-btn b-btn--primary w-full icon-text" style="width:100%; justify-content:center" id="modal-open-web">
+          Open in Browser Instead
+          <i data-lucide="arrow-right" style="width:18px;height:18px;stroke-width:2.25" aria-hidden="true"></i>
         </a>
       </div>
     </div>
   </div>
 
   <!-- ============================================================
-       TOAST CONTAINER (shared)
+       TOAST CONTAINER
        ============================================================ -->
   <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
   <!-- Animated countdown on preview phone -->
   <script>
-    // Animate the preview phone countdown
     (function() {
       let s = 26 * 60 + 35;
       const el = document.getElementById('preview-countdown-display');
@@ -281,6 +355,13 @@
 
   <!-- JS -->
   <script src="./js/install.js" type="module"></script>
+
+  <!-- Initialise Lucide icons — must run AFTER DOM is ready -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
 
 </body>
 </html>

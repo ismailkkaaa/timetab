@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="./css/brutal.css">
   <link rel="stylesheet" href="./css/style.css">
 
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
   <style>
     /* ================================================================
        App Shell Styles (app.html only)
@@ -135,8 +138,42 @@
       padding-top: calc(var(--sp-3) - 3px);
     }
 
-    .nav-item__icon { font-size: 1.3rem; line-height: 1; }
+    .nav-item__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+    }
     .nav-item__label { line-height: 1; }
+
+    /* ---- Lucide Icon base ---- */
+    .lucide-icon {
+      display: inline-block;
+      vertical-align: middle;
+      stroke: currentColor;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* Icon + text inline alignment */
+    .icon-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    /* Settings item icon */
+    .settings-item__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: var(--border-base);
+      flex-shrink: 0;
+      color: var(--color-muted);
+    }
 
     /* ================================================================
        HOME VIEW
@@ -694,7 +731,9 @@
         <div id="timetable-container" aria-live="polite">
           <!-- Populated lazily by timetable.js -->
           <div class="empty-state">
-            <div class="empty-state__icon">📅</div>
+            <div class="empty-state__icon">
+              <i data-lucide="calendar" style="width:40px;height:40px;stroke-width:1.75" aria-hidden="true"></i>
+            </div>
             <div class="empty-state__title">Open to load timetable</div>
           </div>
         </div>
@@ -711,6 +750,9 @@
           <div class="settings-group__title">Appearance</div>
 
           <div class="settings-item" id="setting-dark-mode">
+            <div class="settings-item__icon">
+              <i data-lucide="moon" style="width:18px;height:18px;stroke-width:2.25" aria-hidden="true"></i>
+            </div>
             <div class="settings-item__info">
               <div class="settings-item__label">Dark Mode</div>
               <div class="settings-item__desc">Switch to a dark background for night use</div>
@@ -728,6 +770,9 @@
           <div class="settings-group__title">Notifications</div>
 
           <div class="settings-item" id="setting-notif">
+            <div class="settings-item__icon">
+              <i data-lucide="bell" style="width:18px;height:18px;stroke-width:2.25" aria-hidden="true"></i>
+            </div>
             <div class="settings-item__info">
               <div class="settings-item__label">Bell Notifications</div>
               <div class="settings-item__desc">Get notified 5 min before class and when it starts</div>
@@ -740,6 +785,9 @@
           </div>
 
           <div class="settings-item" id="setting-sound">
+            <div class="settings-item__icon">
+              <i data-lucide="volume-2" style="width:18px;height:18px;stroke-width:2.25" aria-hidden="true"></i>
+            </div>
             <div class="settings-item__info">
               <div class="settings-item__label">Notification Sound</div>
               <div class="settings-item__desc">Play a sound with each notification</div>
@@ -783,15 +831,21 @@
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" id="bottom-nav" role="navigation" aria-label="Main navigation">
       <button class="nav-item nav-item--active" data-view="home" id="nav-home" type="button" aria-label="Home">
-        <span class="nav-item__icon">🏠</span>
+        <span class="nav-item__icon">
+          <i data-lucide="house" style="width:22px;height:22px;stroke-width:2.25" aria-hidden="true"></i>
+        </span>
         <span class="nav-item__label">Home</span>
       </button>
       <button class="nav-item" data-view="timetable" id="nav-timetable" type="button" aria-label="Timetable">
-        <span class="nav-item__icon">📅</span>
+        <span class="nav-item__icon">
+          <i data-lucide="calendar" style="width:22px;height:22px;stroke-width:2.25" aria-hidden="true"></i>
+        </span>
         <span class="nav-item__label">Timetable</span>
       </button>
       <button class="nav-item" data-view="settings" id="nav-settings" type="button" aria-label="Settings">
-        <span class="nav-item__icon">⚙️</span>
+        <span class="nav-item__icon">
+          <i data-lucide="settings" style="width:22px;height:22px;stroke-width:2.25" aria-hidden="true"></i>
+        </span>
         <span class="nav-item__label">Settings</span>
       </button>
     </nav>
@@ -818,6 +872,13 @@
 
   <!-- App JS (ES Modules) -->
   <script type="module" src="./js/app.js"></script>
+
+  <!-- Initialise Lucide icons — after DOM ready -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
 
 </body>
 </html>

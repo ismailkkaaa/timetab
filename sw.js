@@ -2,7 +2,7 @@
    sw.js — Service Worker: Cache-First Strategy
    ============================================================ */
 
-const CACHE_NAME = 'timetab-v1';
+const CACHE_NAME = 'timetab-v2';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -19,6 +19,7 @@ const ASSETS_TO_CACHE = [
   './js/notification.js',
   './js/install.js',
   './js/storage.js',
+  './js/icons.js',
   './assets/logo.svg',
   './assets/icons/icon-192.svg',
   './assets/icons/icon-512.svg',

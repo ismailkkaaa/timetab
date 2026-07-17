@@ -4,6 +4,7 @@
 
 import Timetable from './timetable.js';
 import Notification from './notification.js';
+import Icons from './icons.js';
 
 const Timer = (() => {
   let _schedule    = [];    // Today's periods
@@ -101,8 +102,17 @@ const Timer = (() => {
     elCurrentSubject.textContent = period.subject;
     elCurrentTeacher.textContent = period.teacher || '—';
     elCurrentRoom.textContent    = period.room    || '—';
-    elCurrentStatus.textContent  = isBreak ? '☕ Break' : isLunch ? '🍽 Lunch' : '📚 In Progress';
-    elCountdown.textContent      = formatTime(remainingSec);
+
+    // Status label with icon
+    if (isBreak) {
+      elCurrentStatus.innerHTML = Icons.svg('coffee', 14, 2.25) + ' Break';
+    } else if (isLunch) {
+      elCurrentStatus.innerHTML = Icons.svg('utensils', 14, 2.25) + ' Lunch';
+    } else {
+      elCurrentStatus.innerHTML = Icons.svg('book-open', 14, 2.25) + ' In Progress';
+    }
+
+    elCountdown.textContent = formatTime(remainingSec);
 
     const cls = isBreak || isLunch ? 'home-countdown--break' : 'home-countdown--active';
     elCountdown.className        = `home-countdown ${cls}`;
@@ -155,14 +165,14 @@ const Timer = (() => {
           <div class="schedule-item__subject">${p.subject}</div>
           ${p.teacher ? `<div class="schedule-item__teacher">${p.teacher}</div>` : ''}
         </div>
-        ${isCurr ? '<div class="schedule-item__live"><span class="live-dot"></span>LIVE</div>' : ''}
-        ${isPast ? '<div class="schedule-item__done">✓</div>' : ''}
+        ${isCurr ? `<div class="schedule-item__live"><span class="live-dot"></span>LIVE</div>` : ''}
+        ${isPast ? `<div class="schedule-item__done">${Icons.svg('check', 14, 2.5)}</div>` : ''}
       `;
       elTodayList.appendChild(item);
     });
 
     if (_schedule.length === 0) {
-      elTodayList.innerHTML = `<div class="empty-state" style="padding: 2rem"><div class="empty-state__icon">🎉</div><div class="empty-state__title">Free Day!</div><div class="empty-state__body">No classes scheduled today.</div></div>`;
+      elTodayList.innerHTML = `<div class="empty-state" style="padding: 2rem"><div class="empty-state__icon">${Icons.svg('calendar', 40, 1.75)}</div><div class="empty-state__title">Free Day!</div><div class="empty-state__body">No classes scheduled today.</div></div>`;
     }
   }
 
