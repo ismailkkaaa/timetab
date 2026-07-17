@@ -1,0 +1,61 @@
+{
+  "schedule": {
+    "monday": [
+      { "id": "m1", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "08:00", "end": "08:50", "color": "#2563EB", "room": "A101" },
+      { "id": "m2", "subject": "Physics", "teacher": "Prof. Mehta", "start": "09:00", "end": "09:50", "color": "#7C3AED", "room": "Lab 2" },
+      { "id": "m3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
+      { "id": "m4", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "10:10", "end": "11:00", "color": "#059669", "room": "CS Lab" },
+      { "id": "m5", "subject": "English", "teacher": "Dr. Nair", "start": "11:00", "end": "11:50", "color": "#DC2626", "room": "B202" },
+      { "id": "m6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "m7", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "12:40", "end": "13:30", "color": "#0891B2", "room": "Chem Lab" },
+      { "id": "m8", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "13:30", "end": "14:20", "color": "#EA580C", "room": "Ground" }
+    ],
+    "tuesday": [
+      { "id": "t1", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "08:00", "end": "08:50", "color": "#059669", "room": "CS Lab" },
+      { "id": "t2", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "09:00", "end": "09:50", "color": "#2563EB", "room": "A101" },
+      { "id": "t3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
+      { "id": "t4", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "10:10", "end": "11:00", "color": "#0891B2", "room": "Chem Lab" },
+      { "id": "t5", "subject": "Physics", "teacher": "Prof. Mehta", "start": "11:00", "end": "11:50", "color": "#7C3AED", "room": "Lab 2" },
+      { "id": "t6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "t7", "subject": "English", "teacher": "Dr. Nair", "start": "12:40", "end": "13:30", "color": "#DC2626", "room": "B202" },
+      { "id": "t8", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "13:30", "end": "14:20", "color": "#2563EB", "room": "A101" }
+    ],
+    "wednesday": [
+      { "id": "w1", "subject": "English", "teacher": "Dr. Nair", "start": "08:00", "end": "08:50", "color": "#DC2626", "room": "B202" },
+      { "id": "w2", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "09:00", "end": "09:50", "color": "#0891B2", "room": "Chem Lab" },
+      { "id": "w3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
+      { "id": "w4", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "10:10", "end": "11:00", "color": "#2563EB", "room": "A101" },
+      { "id": "w5", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "11:00", "end": "11:50", "color": "#059669", "room": "CS Lab" },
+      { "id": "w6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "w7", "subject": "Physics", "teacher": "Prof. Mehta", "start": "12:40", "end": "13:30", "color": "#7C3AED", "room": "Lab 2" },
+      { "id": "w8", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "13:30", "end": "14:20", "color": "#EA580C", "room": "Ground" }
+    ],
+    "thursday": [
+      { "id": "th1", "subject": "Physics", "teacher": "Prof. Mehta", "start": "08:00", "end": "08:50", "color": "#7C3AED", "room": "Lab 2" },
+      { "id": "th2", "subject": "English", "teacher": "Dr. Nair", "start": "09:00", "end": "09:50", "color": "#DC2626", "room": "B202" },
+      { "id": "th3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
+      { "id": "th4", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "10:10", "end": "11:00", "color": "#EA580C", "room": "Ground" },
+      { "id": "th5", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "11:00", "end": "11:50", "color": "#0891B2", "room": "Chem Lab" },
+      { "id": "th6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "th7", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "12:40", "end": "13:30", "color": "#2563EB", "room": "A101" },
+      { "id": "th8", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "13:30", "end": "14:20", "color": "#059669", "room": "CS Lab" }
+    ],
+    "friday": [
+      { "id": "f1", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "08:00", "end": "08:50", "color": "#0891B2", "room": "Chem Lab" },
+      { "id": "f2", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "09:00", "end": "09:50", "color": "#059669", "room": "CS Lab" },
+      { "id": "f3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
+      { "id": "f4", "subject": "Physics", "teacher": "Prof. Mehta", "start": "10:10", "end": "11:00", "color": "#7C3AED", "room": "Lab 2" },
+      { "id": "f5", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "11:00", "end": "11:50", "color": "#2563EB", "room": "A101" },
+      { "id": "f6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "f7", "subject": "English", "teacher": "Dr. Nair", "start": "12:40", "end": "13:30", "color": "#DC2626", "room": "B202" },
+      { "id": "f8", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "13:30", "end": "14:20", "color": "#EA580C", "room": "Ground" }
+    ]
+  },
+  "meta": {
+    "institution": "TimeTab College",
+    "semester": "Semester 1 — 2026",
+    "periodDuration": 50,
+    "breakDuration": 20,
+    "lunchDuration": 50
+  }
+}

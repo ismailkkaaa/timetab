@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" fill="#111111"/>
+  <rect y="0" width="512" height="52" fill="#2563EB"/>
+  <!-- White T -->
+  <rect x="72" y="116" width="92" height="280" fill="#FFFFFF"/>
+  <rect x="72" y="116" width="164" height="62" fill="#FFFFFF"/>
+  <!-- Blue T -->
+  <rect x="292" y="164" width="64" height="232" fill="#2563EB"/>
+  <rect x="256" y="164" width="136" height="58" fill="#2563EB"/>
+</svg>

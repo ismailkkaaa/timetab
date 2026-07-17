@@ -1,0 +1,436 @@
+/* ============================================================
+   landing.css — Landing Page Styles (index.html only)
+   ============================================================ */
+
+/* ---- Landing Base ---- */
+.landing-body {
+  overflow-x: hidden;
+}
+
+/* ---- Hero Section ---- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--sp-8) var(--sp-5);
+  border-bottom: var(--border-thick);
+  position: relative;
+  background: var(--color-bg);
+}
+
+/* Grid background lines — brutalist detail */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.hero__logo-wrap {
+  margin-bottom: var(--sp-6);
+  animation: logoPop 0.5s var(--ease-snap) both;
+}
+
+@keyframes logoPop {
+  from { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);     opacity: 1; }
+}
+
+.hero__wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 12vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--color-dark);
+  animation: slideUp 0.5s 0.1s var(--ease-snap) both;
+}
+
+.hero__wordmark span {
+  color: var(--color-primary);
+}
+
+.hero__subtitle {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-top: var(--sp-3);
+  animation: slideUp 0.5s 0.2s var(--ease-snap) both;
+}
+
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0);    }
+}
+
+.hero__cta {
+  margin-top: var(--sp-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  animation: slideUp 0.5s 0.3s var(--ease-snap) both;
+}
+
+.hero__install-btn {
+  font-size: 1.1rem;
+  padding: var(--sp-4) var(--sp-12);
+  box-shadow: 5px 5px 0 var(--color-primary-dark);
+}
+
+.hero__install-btn:hover {
+  box-shadow: 7px 7px 0 var(--color-primary-dark);
+}
+
+.hero__note {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Scroll indicator */
+.hero__scroll {
+  position: absolute;
+  bottom: var(--sp-8);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  animation: bounce 2s infinite;
+}
+
+.hero__scroll svg {
+  display: inline-block;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ---- Section Base ---- */
+.section {
+  padding: var(--sp-16) var(--sp-5);
+  border-bottom: var(--border-base);
+}
+
+.section__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--sp-3);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-dark);
+  margin-bottom: var(--sp-6);
+}
+
+/* ---- Feature Cards ---- */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--sp-5);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: var(--color-surface);
+  border: var(--border-thick);
+  padding: var(--sp-6);
+  position: relative;
+  box-shadow: 4px 4px 0 var(--color-border);
+  transition: transform var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap);
+  cursor: default;
+}
+
+.feature-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 var(--color-border);
+}
+
+.feature-card__icon {
+  font-size: 2.2rem;
+  margin-bottom: var(--sp-4);
+  line-height: 1;
+}
+
+.feature-card__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: var(--sp-2);
+}
+
+.feature-card__body {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.feature-card__accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--color-primary);
+}
+
+/* ---- Screenshot / Preview ---- */
+.preview-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-10);
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.preview-device {
+  position: relative;
+  border: var(--border-bolder);
+  box-shadow: 8px 8px 0 var(--color-border);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-surface-alt);
+}
+
+.preview-device--phone {
+  width: 220px;
+  height: 420px;
+}
+
+.preview-device__screen {
+  width: 100%;
+  height: 100%;
+  background: var(--color-dark);
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-4);
+  gap: var(--sp-3);
+}
+
+/* Simulated phone screen UI */
+.preview-screen__bar {
+  height: 8px;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary-dark);
+}
+
+.preview-screen__card {
+  background: var(--color-surface);
+  border: 2px solid #fff;
+  padding: var(--sp-3);
+  flex-shrink: 0;
+}
+
+.preview-screen__card--sm { height: 56px; }
+.preview-screen__card--lg { flex: 1; }
+
+.preview-screen__tag {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.preview-screen__subject {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--color-dark);
+}
+
+.preview-screen__countdown {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-align: center;
+  padding: var(--sp-4) 0;
+}
+
+.preview-text {
+  max-width: 320px;
+}
+
+.preview-text__title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: var(--sp-4);
+}
+
+.preview-text__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.preview-text__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: 0.875rem;
+}
+
+.preview-text__item::before {
+  content: '▶';
+  font-size: 0.6rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ---- How to Install ---- */
+.install-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--sp-4);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.install-step {
+  border: var(--border-base);
+  padding: var(--sp-5);
+  background: var(--color-surface);
+  position: relative;
+}
+
+.install-step__num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: var(--sp-3);
+}
+
+.install-step__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: var(--sp-2);
+}
+
+.install-step__body {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+/* ---- Footer ---- */
+.footer {
+  border-top: var(--border-thick);
+  padding: var(--sp-8) var(--sp-5);
+  background: var(--color-dark);
+  color: var(--color-white);
+}
+
+.footer__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+.footer__brand {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.footer__brand span { color: var(--color-primary); }
+
+.footer__meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #888;
+  letter-spacing: 0.04em;
+}
+
+.footer__link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* ---- Install Modal ---- */
+.install-modal__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+}
+
+.install-modal__step {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+
+.install-modal__step-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-surface-alt);
+  border: var(--border-base);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.install-modal__step-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .section { padding: var(--sp-12) var(--sp-4); }
+  .hero { padding: var(--sp-12) var(--sp-4); }
+  .preview-device--phone { width: 180px; height: 340px; }
+  .preview-text__title { font-size: 1.3rem; }
+}

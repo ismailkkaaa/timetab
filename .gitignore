@@ -1,0 +1,19 @@
+# OS & editor artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE folders
+.vscode/
+.idea/
+
+# Node (if ever used for tooling)
+node_modules/
+npm-debug.log*
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+*.log

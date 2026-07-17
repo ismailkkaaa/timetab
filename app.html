@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="TimeTab App — Live period countdown, weekly timetable, and bell notifications for college students.">
+  <meta name="theme-color" content="#2563EB">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TimeTab">
+
+  <title>TimeTab</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icons/icon-192.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-512.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/brutal.css">
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    /* ================================================================
+       App Shell Styles (app.html only)
+       ================================================================ */
+
+    /* ---- App Layout ---- */
+    html, body { height: 100%; overflow: hidden; }
+
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      height: 100dvh; /* Dynamic viewport height for mobile browsers */
+      background: var(--color-bg);
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ---- App Header ---- */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-4) var(--sp-5);
+      border-bottom: var(--border-thick);
+      background: var(--color-surface);
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: var(--z-base);
+    }
+
+    .app-header__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+    }
+
+    .app-header__logo {
+      width: 32px;
+      height: 32px;
+      border: var(--border-base);
+    }
+
+    .app-header__name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .app-header__name span { color: var(--color-primary); }
+
+    /* ---- Views Container ---- */
+    .views-container {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+    }
+
+    .view {
+      min-height: 100%;
+      padding: var(--sp-5);
+    }
+
+    /* ---- Bottom Nav ---- */
+    .bottom-nav {
+      display: flex;
+      border-top: var(--border-thick);
+      background: var(--color-surface);
+      flex-shrink: 0;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: var(--sp-3) var(--sp-2);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      border-right: var(--border-thin);
+      transition: background var(--dur-fast), color var(--dur-fast);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-item:last-child { border-right: none; }
+
+    .nav-item:active { background: var(--color-bg-alt); }
+
+    .nav-item--active {
+      color: var(--color-primary);
+      background: var(--color-surface-alt);
+      border-top: 3px solid var(--color-primary);
+      padding-top: calc(var(--sp-3) - 3px);
+    }
+
+    .nav-item__icon { font-size: 1.3rem; line-height: 1; }
+    .nav-item__label { line-height: 1; }
+
+    /* ================================================================
+       HOME VIEW
+       ================================================================ */
+
+    /* ---- Date bar ---- */
+    .home-date {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: var(--sp-4);
+    }
+
+    /* ---- Current Period Card ---- */
+    .current-card {
+      border: var(--border-bolder);
+      background: var(--color-surface);
+      padding: var(--sp-6);
+      margin-bottom: var(--sp-4);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 5px 5px 0 var(--color-border);
+    }
+
+    /* Left accent bar using the period's color */
+    .current-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 6px;
+      background: var(--period-color, var(--color-primary));
+      transition: background var(--dur-base);
+    }
+
+    .current-card[data-state="free"]::before   { background: var(--color-muted); }
+    .current-card[data-state="break"]::before  { background: var(--color-warning); }
+    .current-card[data-state="lunch"]::before  { background: var(--color-warning); }
+
+    .current-card__inner { padding-left: var(--sp-4); }
+
+    .current-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-3);
+    }
+
+    .current-status {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+    }
+
+    .current-card[data-state="break"]  .current-status,
+    .current-card[data-state="lunch"]  .current-status { color: var(--color-warning); }
+    .current-card[data-state="free"]   .current-status { color: var(--color-muted);   }
+
+    .current-subject {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-dark);
+      margin-bottom: var(--sp-2);
+    }
+
+    .current-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-5);
+      flex-wrap: wrap;
+    }
+
+    .current-meta__item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-1);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--color-muted);
+    }
+
+    .current-meta__item svg {
+      display: inline;
+      flex-shrink: 0;
+    }
+
+    /* Countdown number */
+    .home-countdown {
+      font-family: var(--font-mono);
+      font-size: clamp(2.5rem, 12vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      transition: color var(--dur-base);
+    }
+
+    .home-countdown--active { color: var(--color-primary); }
+    .home-countdown--break  { color: var(--color-warning); }
+    .home-countdown--idle   { color: var(--color-muted);   }
+
+    .countdown-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-top: var(--sp-1);
+    }
+
+    /* ---- Next Period Card ---- */
+    .next-card {
+      border: var(--border-base);
+      background: var(--color-surface);
+      padding: var(--sp-4) var(--sp-5);
+      margin-bottom: var(--sp-6);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .next-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--period-color, #888);
+      opacity: 0.7;
+    }
+
+    .next-card__inner { padding-left: var(--sp-2); flex: 1; }
+
+    .next-card__label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: var(--sp-1);
+    }
+
+    .next-subject {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--color-dark);
+    }
+
+    .next-time {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--color-muted);
+      margin-top: 2px;
+    }
+
+    /* ---- Today's Schedule ---- */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--sp-4);
+      padding-bottom: var(--sp-3);
+      border-bottom: var(--border-base);
+    }
+
+    .section-header__title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .schedule-item {
+      display: grid;
+      grid-template-columns: 72px 6px 1fr auto;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      border: var(--border-thin);
+      background: var(--color-surface);
+      transition: opacity var(--dur-fast), border-color var(--dur-fast);
+    }
+
+    .schedule-item--past {
+      opacity: 0.45;
+    }
+
+    .schedule-item--current {
+      border-width: 2px;
+      border-color: var(--period-color, var(--color-primary));
+      background: var(--color-surface-alt);
+    }
+
+    .schedule-item__time {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .schedule-item__color-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 0; /* Brutalist — square dot */
+      background: var(--period-color, #888);
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .schedule-item__info { min-width: 0; }
+
+    .schedule-item__subject {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .schedule-item__teacher {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--color-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .schedule-item__live {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .schedule-item__done {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-muted);
+    }
+
+    .live-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1);   }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ================================================================
+       TIMETABLE VIEW
+       ================================================================ */
+
+    .tt-day {
+      margin-bottom: var(--sp-6);
+    }
+
+    .tt-day__header {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding-bottom: var(--sp-3);
+      border-bottom: var(--border-base);
+      margin-bottom: var(--sp-3);
+    }
+
+    .tt-day__name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tt-day--today .tt-day__name {
+      color: var(--color-primary);
+    }
+
+    .tt-period-grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .tt-period-card {
+      display: grid;
+      grid-template-columns: 4px 1fr;
+      border: var(--border-thin);
+      background: var(--color-surface);
+      overflow: hidden;
+      transition: transform var(--dur-fast) var(--ease-snap),
+                  box-shadow var(--dur-fast) var(--ease-snap);
+    }
+
+    .tt-period-card:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--color-border);
+    }
+
+    .tt-period-card--break {
+      opacity: 0.55;
+    }
+
+    .tt-period-card__color-bar {
+      background: var(--period-color, #888);
+      min-height: 52px;
+    }
+
+    .tt-period-card__content {
+      padding: var(--sp-3) var(--sp-4);
+    }
+
+    .tt-period-card__time {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      margin-bottom: 4px;
+    }
+
+    .tt-period-card__subject {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--color-dark);
+    }
+
+    .tt-period-card__teacher {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      margin-top: 2px;
+    }
+
+    .tt-free-day {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      padding: var(--sp-4);
+      border: var(--border-thin);
+      text-align: center;
+    }
+
+    /* ================================================================
+       SETTINGS VIEW
+       ================================================================ */
+
+    .settings-group {
+      margin-bottom: var(--sp-6);
+    }
+
+    .settings-group__title {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      padding-bottom: var(--sp-3);
+      border-bottom: var(--border-base);
+      margin-bottom: var(--sp-3);
+    }
+
+    .settings-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-4) 0;
+      border-bottom: var(--border-thin);
+      gap: var(--sp-4);
+    }
+
+    .settings-item:last-child { border-bottom: none; }
+
+    .settings-item__info { flex: 1; min-width: 0; }
+
+    .settings-item__label {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 2px;
+    }
+
+    .settings-item__desc {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      line-height: 1.4;
+    }
+
+    .settings-about {
+      border: var(--border-thick);
+      padding: var(--sp-6);
+      background: var(--color-surface);
+      box-shadow: 4px 4px 0 var(--color-border);
+      margin-top: var(--sp-4);
+    }
+
+    .settings-about__name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--sp-2);
+    }
+
+    .settings-about__name span { color: var(--color-primary); }
+
+    .settings-about__version {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-muted);
+      margin-bottom: var(--sp-4);
+    }
+
+    .settings-about__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+    }
+
+    /* ================================================================
+       VIEW TITLES
+       ================================================================ */
+
+    .view-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--sp-5);
+      padding-bottom: var(--sp-4);
+      border-bottom: var(--border-thick);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================================================================
+       APP SHELL
+       ================================================================ -->
+  <div class="app-shell" id="app">
+
+    <!-- Header -->
+    <header class="app-header" id="app-header" role="banner">
+      <div class="app-header__brand">
+        <img src="./assets/logo.svg" alt="TimeTab" class="app-header__logo" width="32" height="32">
+        <span class="app-header__name">Time<span>Tab</span></span>
+      </div>
+      <span class="b-badge" id="header-time-badge" style="font-size:0.7rem; padding:4px 8px"></span>
+    </header>
+
+    <!-- Views -->
+    <main class="views-container" id="views-container" role="main">
+
+      <!-- ============================================================
+           HOME VIEW
+           ============================================================ -->
+      <section class="view" id="view-home" aria-label="Home">
+
+        <!-- Date -->
+        <div class="home-date" id="date-str">Loading…</div>
+
+        <!-- Current Period Card -->
+        <div class="current-card" id="current-card" data-state="free" role="region" aria-label="Current period">
+          <div class="current-card__inner">
+            <div class="current-card__header">
+              <span class="current-status" id="current-status">Checking…</span>
+              <span class="b-badge b-badge--primary" style="font-size:0.6rem">NOW</span>
+            </div>
+            <div class="current-subject" id="current-subject">—</div>
+            <div class="current-meta">
+              <div class="current-meta__item" id="meta-teacher">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <circle cx="6" cy="4" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M1 10c0-2.2 2.2-4 5-4s5 1.8 5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span id="current-teacher">—</span>
+              </div>
+              <div class="current-meta__item" id="meta-room">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M6 1C4.3 1 3 2.3 3 4c0 2.3 3 7 3 7s3-4.7 3-7c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="6" cy="4" r="1" fill="currentColor"/>
+                </svg>
+                <span id="current-room">—</span>
+              </div>
+            </div>
+            <!-- Countdown -->
+            <div class="home-countdown home-countdown--idle" id="countdown" aria-live="polite" aria-label="Time remaining">--:--</div>
+            <div class="countdown-label">remaining</div>
+          </div>
+        </div>
+
+        <!-- Next Period Card -->
+        <div class="next-card hidden" id="next-card" role="region" aria-label="Next period">
+          <div class="next-card__inner">
+            <div class="next-card__label">Up Next</div>
+            <div class="next-subject" id="next-subject">—</div>
+            <div class="next-time" id="next-time">—</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="color:var(--color-muted); flex-shrink:0">
+            <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Today's Schedule -->
+        <div class="section-header">
+          <h2 class="section-header__title">Today's Schedule</h2>
+          <span class="b-label" id="period-count-label"></span>
+        </div>
+        <div class="schedule-list" id="today-list" aria-live="polite" aria-label="Today's schedule">
+          <!-- Populated by timer.js -->
+        </div>
+
+      </section>
+
+      <!-- ============================================================
+           TIMETABLE VIEW
+           ============================================================ -->
+      <section class="view" id="view-timetable" aria-label="Weekly Timetable">
+        <h1 class="view-title">Weekly Timetable</h1>
+        <div id="timetable-container" aria-live="polite">
+          <!-- Populated lazily by timetable.js -->
+          <div class="empty-state">
+            <div class="empty-state__icon">📅</div>
+            <div class="empty-state__title">Open to load timetable</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SETTINGS VIEW
+           ============================================================ -->
+      <section class="view" id="view-settings" aria-label="Settings">
+        <h1 class="view-title">Settings</h1>
+
+        <!-- Appearance -->
+        <div class="settings-group" id="settings-appearance">
+          <div class="settings-group__title">Appearance</div>
+
+          <div class="settings-item" id="setting-dark-mode">
+            <div class="settings-item__info">
+              <div class="settings-item__label">Dark Mode</div>
+              <div class="settings-item__desc">Switch to a dark background for night use</div>
+            </div>
+            <label class="b-toggle" aria-label="Toggle dark mode">
+              <input type="checkbox" id="dark-mode-toggle" role="switch">
+              <div class="b-toggle__track"></div>
+              <div class="b-toggle__thumb"></div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="settings-group" id="settings-notifications">
+          <div class="settings-group__title">Notifications</div>
+
+          <div class="settings-item" id="setting-notif">
+            <div class="settings-item__info">
+              <div class="settings-item__label">Bell Notifications</div>
+              <div class="settings-item__desc">Get notified 5 min before class and when it starts</div>
+            </div>
+            <label class="b-toggle" aria-label="Toggle bell notifications">
+              <input type="checkbox" id="notif-toggle" role="switch">
+              <div class="b-toggle__track"></div>
+              <div class="b-toggle__thumb"></div>
+            </label>
+          </div>
+
+          <div class="settings-item" id="setting-sound">
+            <div class="settings-item__info">
+              <div class="settings-item__label">Notification Sound</div>
+              <div class="settings-item__desc">Play a sound with each notification</div>
+            </div>
+            <label class="b-toggle" aria-label="Toggle notification sound">
+              <input type="checkbox" id="sound-toggle" role="switch">
+              <div class="b-toggle__track"></div>
+              <div class="b-toggle__thumb"></div>
+            </label>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="settings-group" id="settings-about-group">
+          <div class="settings-group__title">About</div>
+
+          <div class="settings-about" id="about-card">
+            <div class="settings-about__name">Time<span>Tab</span></div>
+            <div class="settings-about__version">Version 1.0 · 2026</div>
+            <div class="settings-about__tags">
+              <span class="b-tag" style="color:var(--color-primary)">PWA</span>
+              <span class="b-tag" style="color:var(--color-success)">Offline</span>
+              <span class="b-tag" style="color:var(--color-dark)">No Backend</span>
+              <span class="b-tag" style="color:var(--color-error)">No Login</span>
+              <span class="b-tag" style="color:#7C3AED">Brutalist UI</span>
+            </div>
+            <hr class="b-divider">
+            <p style="font-family:var(--font-mono); font-size:0.72rem; color:var(--color-muted); line-height:1.6">
+              A premium offline timetable PWA for college students. Live period countdowns, bell reminders, weekly schedule — all 100% offline after first load.
+            </p>
+            <div style="margin-top:var(--sp-4)">
+              <a href="./index.html" class="b-btn b-btn--sm" style="text-decoration:none">← Back to Landing</a>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" id="bottom-nav" role="navigation" aria-label="Main navigation">
+      <button class="nav-item nav-item--active" data-view="home" id="nav-home" type="button" aria-label="Home">
+        <span class="nav-item__icon">🏠</span>
+        <span class="nav-item__label">Home</span>
+      </button>
+      <button class="nav-item" data-view="timetable" id="nav-timetable" type="button" aria-label="Timetable">
+        <span class="nav-item__icon">📅</span>
+        <span class="nav-item__label">Timetable</span>
+      </button>
+      <button class="nav-item" data-view="settings" id="nav-settings" type="button" aria-label="Settings">
+        <span class="nav-item__icon">⚙️</span>
+        <span class="nav-item__label">Settings</span>
+      </button>
+    </nav>
+
+  </div><!-- /app-shell -->
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container" aria-live="polite" role="status"></div>
+
+  <!-- Live clock in header badge -->
+  <script>
+    (function() {
+      const badge = document.getElementById('header-time-badge');
+      function updateClock() {
+        const d = new Date();
+        const h = String(d.getHours()).padStart(2,'0');
+        const m = String(d.getMinutes()).padStart(2,'0');
+        if (badge) badge.textContent = h + ':' + m;
+      }
+      updateClock();
+      setInterval(updateClock, 10000); // update every 10 seconds
+    })();
+  </script>
+
+  <!-- App JS (ES Modules) -->
+  <script type="module" src="./js/app.js"></script>
+
+</body>
+</html>

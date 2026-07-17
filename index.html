@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TimeTab — The offline student timetable PWA. Live period countdown, bell notifications, and a premium brutalist UI. Install free.">
+  <meta name="theme-color" content="#2563EB">
+  <meta property="og:title" content="TimeTab — Offline Student Timetable">
+  <meta property="og:description" content="Live period countdown. Bell reminders. 100% offline. Install for free.">
+  <meta property="og:type" content="website">
+
+  <title>TimeTab — Offline Student Timetable</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icons/icon-192.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-512.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/brutal.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/landing.css">
+</head>
+
+<body class="landing-body">
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section class="hero" id="hero" aria-label="Hero">
+
+    <!-- Logo -->
+    <div class="hero__logo-wrap">
+      <img src="./assets/logo.svg" alt="TimeTab Logo" width="80" height="80" id="hero-logo">
+    </div>
+
+    <!-- Wordmark -->
+    <h1 class="hero__wordmark">
+      Time<span>Tab</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="hero__subtitle">Offline Student Timetable</p>
+
+    <!-- CTA -->
+    <div class="hero__cta">
+      <button
+        class="b-btn b-btn--primary b-btn--lg hero__install-btn"
+        id="install-btn"
+        type="button"
+        aria-label="Install TimeTab App"
+      >
+        ⬇ Install App
+      </button>
+      <a href="./app.html" class="b-btn" id="open-app-btn" aria-label="Open Web App">
+        Open Web App →
+      </a>
+      <span class="hero__note">Works offline after first load</span>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero__scroll" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Scroll
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       FEATURES SECTION
+       ============================================================ -->
+  <section class="section" id="features" aria-label="Features">
+    <div class="container container--wide" style="text-align:center">
+      <p class="section__label">Why TimeTab?</p>
+      <h2 class="section__title">Everything you need.<br>Nothing you don't.</h2>
+
+      <div class="features-grid">
+
+        <div class="feature-card" id="feat-offline">
+          <div class="feature-card__accent"></div>
+          <div class="feature-card__icon">📡</div>
+          <div class="feature-card__title">100% Offline</div>
+          <div class="feature-card__body">Works without internet after install. Your timetable is always there, even in dead zones.</div>
+        </div>
+
+        <div class="feature-card" id="feat-countdown">
+          <div class="feature-card__accent" style="background:#7C3AED"></div>
+          <div class="feature-card__icon">⏱</div>
+          <div class="feature-card__title">Live Countdown</div>
+          <div class="feature-card__body">Second-by-second countdown for every period. Know exactly how long till the bell rings.</div>
+        </div>
+
+        <div class="feature-card" id="feat-bell">
+          <div class="feature-card__accent" style="background:#059669"></div>
+          <div class="feature-card__icon">🔔</div>
+          <div class="feature-card__title">Bell Reminders</div>
+          <div class="feature-card__body">Get notified 5 minutes before class and when a period starts. Never miss a lecture.</div>
+        </div>
+
+        <div class="feature-card" id="feat-fast">
+          <div class="feature-card__accent" style="background:#F59E0B"></div>
+          <div class="feature-card__icon">⚡</div>
+          <div class="feature-card__title">Instant Launch</div>
+          <div class="feature-card__body">Opens in under a second. No login. No loading. No backend. Pure native speed.</div>
+        </div>
+
+        <div class="feature-card" id="feat-dark">
+          <div class="feature-card__accent" style="background:#111111"></div>
+          <div class="feature-card__icon">🌙</div>
+          <div class="feature-card__title">Dark Mode</div>
+          <div class="feature-card__body">Easy on the eyes. Persisted across sessions so it's always exactly how you left it.</div>
+        </div>
+
+        <div class="feature-card" id="feat-pwa">
+          <div class="feature-card__accent" style="background:#DC2626"></div>
+          <div class="feature-card__icon">📱</div>
+          <div class="feature-card__title">Native App Feel</div>
+          <div class="feature-card__body">Install to home screen. Fullscreen experience. No app store. No updates.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PREVIEW SECTION
+       ============================================================ -->
+  <section class="section" id="preview" aria-label="App Preview">
+    <div class="container container--wide">
+      <p class="section__label">See It in Action</p>
+      <h2 class="section__title">Your class, always in view.</h2>
+
+      <div class="preview-section">
+        <!-- Simulated Phone Screen -->
+        <div class="preview-device preview-device--phone" id="preview-phone" aria-label="App screenshot preview">
+          <div class="preview-device__screen">
+            <div class="preview-screen__bar"></div>
+
+            <!-- Date chip -->
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:#888; letter-spacing:0.08em; text-transform:uppercase;">
+              FRIDAY · 10:24 AM
+            </div>
+
+            <!-- Current period card -->
+            <div class="preview-screen__card preview-screen__card--lg" style="border-color:#2563EB; border-width:2px">
+              <div class="preview-screen__tag">NOW</div>
+              <div class="preview-screen__subject">Computer Science</div>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#aaa; margin-top:2px">Ms. Kapoor · CS Lab</div>
+              <div class="preview-screen__countdown" id="preview-countdown-display">26:35</div>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:#888; text-align:center; text-transform:uppercase; letter-spacing:0.1em">remaining</div>
+            </div>
+
+            <!-- Next period -->
+            <div class="preview-screen__card preview-screen__card--sm" style="border-color:#7C3AED; border-width:2px">
+              <div class="preview-screen__tag" style="color:#7C3AED">NEXT</div>
+              <div class="preview-screen__subject" style="font-size:0.75rem">Physics · 11:00</div>
+            </div>
+
+            <!-- Nav bar -->
+            <div style="display:flex; justify-content:space-around; border-top:1px solid #333; padding-top:6px; margin-top:auto">
+              <span style="font-size:1rem">🏠</span>
+              <span style="font-size:1rem">📅</span>
+              <span style="font-size:1rem">⚙️</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature list -->
+        <div class="preview-text">
+          <div class="preview-text__title">
+            Know your day.<br>At a glance.
+          </div>
+          <ul class="preview-text__list">
+            <li class="preview-text__item">Real-time countdown for current class</li>
+            <li class="preview-text__item">Current subject, teacher, room at a glance</li>
+            <li class="preview-text__item">Next period preview</li>
+            <li class="preview-text__item">Today's full schedule scrollable below</li>
+            <li class="preview-text__item">Past periods clearly marked</li>
+            <li class="preview-text__item">Weekly timetable with color-coded subjects</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW TO INSTALL SECTION
+       ============================================================ -->
+  <section class="section" id="how-to-install" aria-label="How to Install">
+    <div class="container container--wide">
+      <p class="section__label">Setup</p>
+      <h2 class="section__title">Ready in 30 seconds.</h2>
+
+      <div class="install-steps">
+        <div class="install-step" id="step-1">
+          <div class="install-step__num">01</div>
+          <div class="install-step__title">Open in Browser</div>
+          <div class="install-step__body">Use Chrome or Edge on Android/Desktop, or Safari on iPhone.</div>
+        </div>
+        <div class="install-step" id="step-2">
+          <div class="install-step__num">02</div>
+          <div class="install-step__title">Tap Install</div>
+          <div class="install-step__body">Hit the Install button above. On iOS, use Share → Add to Home Screen.</div>
+        </div>
+        <div class="install-step" id="step-3">
+          <div class="install-step__num">03</div>
+          <div class="install-step__title">You're Done</div>
+          <div class="install-step__body">TimeTab appears on your home screen. Open it like any other app — offline first.</div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:var(--sp-10)">
+        <button class="b-btn b-btn--primary b-btn--lg" id="install-btn-2" type="button" onclick="document.getElementById('install-btn').click()">
+          ⬇ Install Now
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer" id="footer" aria-label="Footer">
+    <div class="footer__inner">
+      <div class="footer__brand">Time<span>Tab</span></div>
+      <div class="footer__meta">V1.0 · 2026 · Offline Student Timetable PWA</div>
+      <a href="#how-to-install" class="footer__link">How to Install</a>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       INSTALL INSTRUCTIONS MODAL
+       ============================================================ -->
+  <div class="modal-backdrop hidden" id="install-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title" id="modal-title">📱 How to Install</h2>
+        <button class="b-btn b-btn--icon" id="modal-close" aria-label="Close">✕</button>
+      </div>
+      <p style="font-size:0.875rem; color:var(--color-muted); margin-bottom:var(--sp-4)">
+        Follow these steps to install TimeTab on your device:
+      </p>
+      <div class="install-modal__steps" id="install-instructions">
+        <!-- Filled dynamically by install.js -->
+      </div>
+      <div style="margin-top:var(--sp-6)">
+        <a href="./app.html" class="b-btn b-btn--primary w-full" style="width:100%; justify-content:center" id="modal-open-web">
+          Open in Browser Instead →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TOAST CONTAINER (shared)
+       ============================================================ -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Animated countdown on preview phone -->
+  <script>
+    // Animate the preview phone countdown
+    (function() {
+      let s = 26 * 60 + 35;
+      const el = document.getElementById('preview-countdown-display');
+      if (!el) return;
+      setInterval(() => {
+        s = s > 0 ? s - 1 : 50 * 60;
+        const m = Math.floor(s / 60);
+        const sec = s % 60;
+        el.textContent = String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+      }, 1000);
+    })();
+  </script>
+
+  <!-- JS -->
+  <script src="./js/install.js" type="module"></script>
+
+</body>
+</html>
