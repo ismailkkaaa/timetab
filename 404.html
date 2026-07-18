@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimeTab</title>
+  <script>
+    // GitHub Pages 404 redirect trick for SPAs / PWAs
+    // Preserves the path so deep links work after install
+    var path = window.location.pathname;
+    var repo = '/timetab'; // GitHub Pages repo name
+    if (path.startsWith(repo)) {
+      path = path.slice(repo.length) || '/';
+    }
+    // Redirect to the app
+    window.location.replace(
+      window.location.origin + repo + '/app.html'
+    );
+  </script>
+</head>
+<body></body>
+</html>

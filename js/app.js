@@ -133,7 +133,7 @@ const App = (() => {
   function registerSW() {
     if (!('serviceWorker' in navigator)) return;
 
-    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
       .then((reg) => {
         console.log('[SW] Registered:', reg.scope);
 

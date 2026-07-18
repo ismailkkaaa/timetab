@@ -1,38 +1,38 @@
 """
-generate_icons.py
-Generates icon-192.png, icon-512.png, and icon-maskable-512.png
-for TimeTab PWA using only Python stdlib.
-
-The TT logo:
-  - Background: #0C0C0D (near black)
-  - Left "T": #DDDDDD (light grey) — large, top-left area
-  - Right "T": #185DEA (blue) — smaller, overlapping bottom-right
-
-Produced as flat, clean geometric shapes matching the SVG icon design.
+generate_icons.py — v2
+Generates icon-192.png, icon-512.png, icon-maskable-512.png
+with RGBA (color_type=6) for proper Android PWA support.
+Pure Python stdlib — no external dependencies.
 """
-
 import struct, zlib
 
-def make_png(width: int, height: int, pixels) -> bytes:
-    """pixels: list of (R,G,B,A) tuples in row-major order"""
+def make_png_rgba(width: int, height: int, pixels: list) -> bytes:
+    """
+    pixels: list of (R, G, B, A) tuples, row-major order.
+    Produces a valid RGBA PNG using filter type 0 (none).
+    """
     def chunk(name: bytes, data: bytes) -> bytes:
-        c = struct.pack('>I', len(data)) + name + data
-        c += struct.pack('>I', zlib.crc32(name + data) & 0xFFFFFFFF)
-        return c
+        crc_val = zlib.crc32(name + data) & 0xFFFFFFFF
+        return struct.pack('>I', len(data)) + name + data + struct.pack('>I', crc_val)
 
-    # IHDR
-    ihdr = struct.pack('>IIBBBBB', width, height, 8, 2, 0, 0, 0)  # 8-bit RGB
-    # Build raw image data (RGB — no alpha to keep it simple for PNG)
-    raw = b''
+    # IHDR: width, height, bit_depth=8, color_type=6 (RGBA)
+    ihdr_data = struct.pack('>IIBBBBB', width, height, 8, 6, 0, 0, 0)
+
+    # Raw scanlines: filter byte + RGBA bytes
+    raw_rows = []
     for row in range(height):
-        raw += b'\x00'  # filter type: none
+        row_bytes = bytearray()
+        row_bytes.append(0)  # filter type: None
         for col in range(width):
             r, g, b, a = pixels[row * width + col]
-            raw += bytes([r, g, b])
-    compressed = zlib.compress(raw, 9)
+            row_bytes.extend([r, g, b, a])
+        raw_rows.append(bytes(row_bytes))
+
+    raw_data = b''.join(raw_rows)
+    compressed = zlib.compress(raw_data, 9)
 
     png = b'\x89PNG\r\n\x1a\n'
-    png += chunk(b'IHDR', ihdr)
+    png += chunk(b'IHDR', ihdr_data)
     png += chunk(b'IDAT', compressed)
     png += chunk(b'IEND', b'')
     return png
@@ -40,12 +40,13 @@ def make_png(width: int, height: int, pixels) -> bytes:
 
 def make_icon(size: int, maskable: bool = False) -> bytes:
     """
-    Draws a TT logo at the given size.
-    maskable: adds extra safe-zone padding (20% each side) for maskable icons
+    Renders the TimeTab TT logo at the given size.
+    maskable=True adds a 20% safe-zone padding on all sides.
     """
-    BG   = (12, 12, 13, 255)    # #0C0C0D
-    LGREY = (221, 221, 221, 255) # #DDDDDD
-    BLUE  = (24, 93, 234, 255)   # #185DEA
+    # Brand colours
+    BG     = (12,  12,  13,  255)   # #0C0C0D
+    LGREY  = (221, 221, 221, 255)   # #DDDDDD
+    BLUE   = (24,  93,  234, 255)   # #185DEA
 
     pixels = [BG] * (size * size)
 
@@ -54,45 +55,42 @@ def make_icon(size: int, maskable: bool = False) -> bytes:
             for col in range(max(0, x), min(size, x + w)):
                 pixels[row * size + col] = color
 
-    # For maskable icons, push everything into the central 60%
-    pad = int(size * 0.15) if maskable else 0
+    # Maskable icons need 20% safe-zone padding
+    pad = int(size * 0.20) if maskable else int(size * 0.05)
     draw_w = size - pad * 2
-    draw_h = size - pad * 2
 
-    # Scale factors based on the SVG viewbox (210x210)
+    # Scale factor: SVG canvas is 210×210
     s = draw_w / 210.0
+    ox = pad
+    oy = pad
 
-    def scaled(v):
-        return int(v * s)
+    def sc(v): return int(round(v * s))
 
-    ox = pad  # x offset
-    oy = pad  # y offset
+    # Grey "T" — SVG rect: x=24 y=39 w=91 h=119
+    #   Top bar: x=24 y=39 w=91 h=32
+    fill_rect(ox + sc(24), oy + sc(39), sc(91), sc(32), LGREY)
+    #   Stem:    x=53 y=71 w=32 h=87   (centered: 24+(91-32)/2 = 53.5)
+    fill_rect(ox + sc(53), oy + sc(71), sc(32), sc(87), LGREY)
 
-    # --- Left "T" (grey) at SVG coords: x=24,y=39, w=91,h=119 ---
-    # Top bar of grey T: x=24,y=39, w=91,h=32
-    fill_rect(ox + scaled(24), oy + scaled(39), scaled(91), scaled(32), LGREY)
-    # Stem of grey T: x=53,y=71, w=32,h=87
-    fill_rect(ox + scaled(53), oy + scaled(71), scaled(32), scaled(87), LGREY)
+    # Blue "T" — SVG rect: x=96 y=83 w=88 h=97
+    #   Top bar: x=96 y=83 w=88 h=31
+    fill_rect(ox + sc(96), oy + sc(83), sc(88), sc(31), BLUE)
+    #   Stem:    x=125 y=114 w=29 h=66   (centered: 96+(88-29)/2 = 125.5)
+    fill_rect(ox + sc(125), oy + sc(114), sc(29), sc(66), BLUE)
 
-    # --- Right "T" (blue) at SVG coords: x=96,y=83, w=88,h=97 ---
-    # Top bar of blue T: x=96,y=83, w=88,h=31
-    fill_rect(ox + scaled(96), oy + scaled(83), scaled(88), scaled(31), BLUE)
-    # Stem of blue T: x=125,y=114, w=29,h=66
-    fill_rect(ox + scaled(125), oy + scaled(114), scaled(29), scaled(66), BLUE)
-
-    return make_png(size, size, pixels)
+    return make_png_rgba(size, size, pixels)
 
 
-# Generate icons
-for size, suffix, maskable in [
-    (192, 'icon-192', False),
-    (512, 'icon-512', False),
-    (512, 'icon-maskable-512', True),
-]:
-    path = f'assets/icons/{suffix}.png'
+ICONS = [
+    ('assets/icons/icon-192.png',          192, False),
+    ('assets/icons/icon-512.png',          512, False),
+    ('assets/icons/icon-maskable-512.png', 512, True),
+]
+
+for path, size, maskable in ICONS:
     data = make_icon(size, maskable)
     with open(path, 'wb') as f:
         f.write(data)
-    print(f'Generated {path} ({len(data)} bytes)')
+    print(f'Generated {path}  ({size}x{size}, {len(data):,} bytes)')
 
-print('Done.')
+print('\nAll icons generated successfully.')

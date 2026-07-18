@@ -1,37 +1,47 @@
 /* ============================================================
-   sw.js — TimeTab Service Worker
-   Strategy: Cache-First for static assets, Network-First for HTML
-   Lucide CDN cached on first request for offline use
-   Version: 3
+   sw.js — TimeTab Service Worker v4
+   Relative-path safe — works on GitHub Pages subdirectories
+   and any hosting root equally.
    ============================================================ */
 
-const CACHE_VERSION  = 'timetab-v3';
-const RUNTIME_CACHE  = 'timetab-runtime-v3';
+const CACHE_VERSION = 'timetab-v4';
+const RUNTIME_CACHE = 'timetab-runtime-v4';
 
-/* All static assets to pre-cache on install */
-const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/app.html',
-  '/manifest.json',
-  '/timetable.json',
-  '/css/brutal.css',
-  '/css/style.css',
-  '/css/landing.css',
-  '/js/app.js',
-  '/js/timer.js',
-  '/js/timetable.js',
-  '/js/notification.js',
-  '/js/install.js',
-  '/js/storage.js',
-  '/js/icons.js',
-  '/assets/logo.svg',
-  '/assets/icons/icon-192.svg',
-  '/assets/icons/icon-512.svg',
-  '/assets/icons/icon-192.png',
-  '/assets/icons/icon-512.png',
-  '/assets/icons/icon-maskable-512.png',
-  '/assets/screenshots/home.png',
+/*
+  Build absolute URLs from relative paths using the SW's own location.
+  This makes the SW work correctly whether hosted at:
+    https://example.com/           (root)
+    https://ismailkkaaa.github.io/timetab/   (subdirectory)
+*/
+const BASE = new URL('./', self.location.href).href;
+
+function rel(path) {
+  return new URL(path, BASE).href;
+}
+
+const PRECACHE_URLS = [
+  rel(''),                                   // root (index.html)
+  rel('index.html'),
+  rel('app.html'),
+  rel('manifest.json'),
+  rel('timetable.json'),
+  rel('css/brutal.css'),
+  rel('css/style.css'),
+  rel('css/landing.css'),
+  rel('js/app.js'),
+  rel('js/timer.js'),
+  rel('js/timetable.js'),
+  rel('js/notification.js'),
+  rel('js/install.js'),
+  rel('js/storage.js'),
+  rel('js/icons.js'),
+  rel('assets/logo.svg'),
+  rel('assets/icons/icon-192.svg'),
+  rel('assets/icons/icon-512.svg'),
+  rel('assets/icons/icon-192.png'),
+  rel('assets/icons/icon-512.png'),
+  rel('assets/icons/icon-maskable-512.png'),
+  rel('assets/screenshots/home.png'),
 ];
 
 /* ================================================================
@@ -41,121 +51,126 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_VERSION)
       .then((cache) => {
-        console.log('[SW] Pre-caching assets…');
-        // Use individual adds so one failure doesn't abort the whole batch
+        console.log('[SW v4] Pre-caching', PRECACHE_URLS.length, 'assets…');
+        // allSettled so a single 404 does not abort the entire install
         return Promise.allSettled(
-          PRECACHE_ASSETS.map(url => cache.add(url).catch(err => {
-            console.warn('[SW] Could not cache:', url, err.message);
-          }))
+          PRECACHE_URLS.map((url) =>
+            cache.add(url).catch((err) =>
+              console.warn('[SW] Could not cache:', url, err.message)
+            )
+          )
         );
       })
       .then(() => {
-        console.log('[SW] Install complete — skipping wait');
-        return self.skipWaiting();
+        console.log('[SW v4] Install complete');
+        return self.skipWaiting(); // take control immediately
       })
   );
 });
 
 /* ================================================================
-   ACTIVATE — Clean up old caches and claim clients immediately
+   ACTIVATE — Purge stale caches and claim all open tabs
    ================================================================ */
 self.addEventListener('activate', (event) => {
-  const VALID_CACHES = [CACHE_VERSION, RUNTIME_CACHE];
+  const KEEP = new Set([CACHE_VERSION, RUNTIME_CACHE]);
   event.waitUntil(
     caches.keys()
-      .then((keys) =>
+      .then((names) =>
         Promise.all(
-          keys
-            .filter(key => !VALID_CACHES.includes(key))
-            .map(key => {
-              console.log('[SW] Removing stale cache:', key);
-              return caches.delete(key);
-            })
+          names.filter((n) => !KEEP.has(n)).map((n) => {
+            console.log('[SW v4] Removing stale cache:', n);
+            return caches.delete(n);
+          })
         )
       )
       .then(() => {
-        console.log('[SW] Activated — claiming clients');
+        console.log('[SW v4] Activated — claiming clients');
         return self.clients.claim();
       })
   );
 });
 
 /* ================================================================
-   FETCH — Tiered strategy
+   FETCH — Tiered caching strategy
    ================================================================ */
 self.addEventListener('fetch', (event) => {
-  // Only intercept GET requests
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
-  const isSameOrigin   = url.origin === self.location.origin;
-  const isGoogleFonts  = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com';
-  const isLucideCDN    = url.hostname === 'unpkg.com' && url.pathname.includes('lucide');
+  const isSameOrigin  = url.origin === self.location.origin;
+  const isGoogleFonts = url.hostname === 'fonts.googleapis.com' ||
+                        url.hostname === 'fonts.gstatic.com';
+  const isLucideCDN   = url.hostname === 'unpkg.com' &&
+                        url.pathname.includes('lucide');
+  const isCDN         = isGoogleFonts || isLucideCDN;
 
-  // Ignore unrecognised cross-origin requests
-  if (!isSameOrigin && !isGoogleFonts && !isLucideCDN) return;
+  // Ignore unknown cross-origin requests
+  if (!isSameOrigin && !isCDN) return;
 
-  // ---- Strategy A: Navigation (HTML) — Network-first, fallback to cache ----
+  /* ------------------------------------------------------------------
+     Strategy A — Navigation requests (HTML pages)
+     Network-first → fallback to cached page → fallback to app.html
+  ------------------------------------------------------------------ */
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
-        .then((response) => {
-          // Cache the fresh HTML
-          if (response && response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_VERSION).then(c => c.put(event.request, clone));
+        .then((res) => {
+          if (res && res.status === 200) {
+            caches.open(CACHE_VERSION).then((c) => c.put(event.request, res.clone()));
           }
-          return response;
+          return res;
         })
-        .catch(() => {
-          // Offline: serve cached HTML (prefer exact match, fall back to app.html)
-          return caches.match(event.request)
-            || caches.match('/app.html')
-            || caches.match('/index.html');
-        })
+        .catch(() =>
+          caches.match(event.request)
+            .then((cached) => cached || caches.match(rel('app.html')))
+        )
     );
     return;
   }
 
-  // ---- Strategy B: CDN resources (Fonts, Lucide) — Cache-first with network fallback ----
-  if (isGoogleFonts || isLucideCDN) {
+  /* ------------------------------------------------------------------
+     Strategy B — CDN resources (Fonts, Lucide icons)
+     Cache-first → fetch and cache → graceful offline response
+  ------------------------------------------------------------------ */
+  if (isCDN) {
     event.respondWith(
       caches.match(event.request).then((cached) => {
         if (cached) return cached;
-        return fetch(event.request).then((response) => {
-          if (response && response.status === 200) {
-            const clone = response.clone();
-            caches.open(RUNTIME_CACHE).then(c => c.put(event.request, clone));
-          }
-          return response;
-        }).catch(() => {
-          // Offline and not cached — return empty for fonts (graceful degradation)
-          return new Response('', { status: 503, statusText: 'Offline' });
-        });
+        return fetch(event.request)
+          .then((res) => {
+            if (res && res.status === 200) {
+              caches.open(RUNTIME_CACHE).then((c) => c.put(event.request, res.clone()));
+            }
+            return res;
+          })
+          .catch(() => new Response('', { status: 503, statusText: 'Offline' }));
       })
     );
     return;
   }
 
-  // ---- Strategy C: Static assets — Cache-first, update in background ----
+  /* ------------------------------------------------------------------
+     Strategy C — All other same-origin assets
+     Cache-first → update in background (stale-while-revalidate)
+  ------------------------------------------------------------------ */
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      const networkFetch = fetch(event.request).then((response) => {
-        if (response && response.status === 200 && response.type !== 'error') {
-          const clone = response.clone();
-          caches.open(CACHE_VERSION).then(c => c.put(event.request, clone));
-        }
-        return response;
-      }).catch(() => cached || new Response('', { status: 503 }));
+      const fromNetwork = fetch(event.request)
+        .then((res) => {
+          if (res && res.status === 200) {
+            caches.open(CACHE_VERSION).then((c) => c.put(event.request, res.clone()));
+          }
+          return res;
+        })
+        .catch(() => cached || new Response('', { status: 503 }));
 
-      // Return cached immediately; update happens in background
-      return cached || networkFetch;
+      return cached || fromNetwork;
     })
   );
 });
 
 /* ================================================================
-   MESSAGE — Allow pages to trigger SW actions
+   MESSAGE — Remote skip-waiting for update flows
    ================================================================ */
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') {
