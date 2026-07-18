@@ -127,15 +127,42 @@ const App = (() => {
   window.AppToast = showToast;
 
   // ----------------------------------------------------------------
-  // Service Worker Registration
+  // Service Worker Registration + Update Handling
   // ----------------------------------------------------------------
 
   function registerSW() {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('[SW] Registered:', reg.scope))
-        .catch(err => console.warn('[SW] Failed:', err));
-    }
+    if (!('serviceWorker' in navigator)) return;
+
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then((reg) => {
+        console.log('[SW] Registered:', reg.scope);
+
+        // Detect when a new SW is installing
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          if (!newWorker) return;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // A new version is ready — auto-activate and reload
+              console.log('[SW] Update ready — activating');
+              showToast('App updated — reloading…');
+              setTimeout(() => {
+                newWorker.postMessage('SKIP_WAITING');
+              }, 1500);
+            }
+          });
+        });
+      })
+      .catch((err) => console.warn('[SW] Registration failed:', err));
+
+    // Reload when the new SW takes control
+    let _reloading = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!_reloading) {
+        _reloading = true;
+        window.location.reload();
+      }
+    });
   }
 
   // ----------------------------------------------------------------
