@@ -119,11 +119,11 @@ ul, ol {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 600;
-  background: var(--color-dark);
-  color: var(--color-white);
+  background: var(--color-dark-surface);
+  color: var(--color-dark-text);
   padding: var(--sp-3) var(--sp-5);
   border: var(--border-base);
-  border-color: var(--color-white);
+  border-color: var(--color-border);
   box-shadow: 3px 3px 0 var(--color-border);
   animation: toastIn 200ms var(--ease-snap) both, toastOut 200ms var(--ease-snap) 2800ms both;
   pointer-events: auto;
@@ -136,7 +136,7 @@ ul, ol {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: var(--color-overlay);
   z-index: var(--z-modal);
   display: flex;
   align-items: center;

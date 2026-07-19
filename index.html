@@ -64,18 +64,69 @@
       height: 44px;
       border: var(--border-base);
       margin-bottom: var(--sp-4);
-      color: var(--color-dark);
+      color: var(--color-text);
     }
     .feature-card__icon .lucide-icon { display: block; }
+
+    /* Feature card accent colour variants — use semantic variables */
+    .feat--purple  .feature-card__accent { background: var(--color-purple); }
+    .feat--purple  .feature-card__icon   { border-color: var(--color-purple); color: var(--color-purple); }
+    .feat--green   .feature-card__accent { background: var(--color-green); }
+    .feat--green   .feature-card__icon   { border-color: var(--color-green); color: var(--color-green); }
+    .feat--warning .feature-card__accent { background: var(--color-warning); }
+    .feat--warning .feature-card__icon   { border-color: var(--color-warning); color: var(--color-warning); }
+    .feat--dark    .feature-card__accent { background: var(--color-dark-surface); }
+    .feat--dark    .feature-card__icon   { border-color: var(--color-border); color: var(--color-text); }
+    .feat--error   .feature-card__accent { background: var(--color-error); }
+    .feat--error   .feature-card__icon   { border-color: var(--color-error); color: var(--color-error); }
 
     /* Preview nav icons */
     .preview-nav-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #888;
+      color: var(--color-muted);
     }
-    .preview-nav-icon--active { color: #2563EB; }
+    .preview-nav-icon--active { color: var(--color-primary); }
+
+    /* Preview mockup elements */
+    .preview-date-chip {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      color: var(--color-muted-preview);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .preview-teacher-line {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--color-muted);
+      margin-top: 2px;
+    }
+    .preview-remaining-label {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      color: var(--color-muted-preview);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .preview-card--active {
+      border-color: var(--color-primary);
+      border-width: 2px;
+    }
+    .preview-card--next {
+      border-color: var(--color-purple);
+      border-width: 2px;
+    }
+    .preview-tag--next { color: var(--color-purple); }
+    .preview-nav-bar {
+      display: flex;
+      justify-content: space-around;
+      border-top: var(--border-thin);
+      padding-top: 6px;
+      margin-top: auto;
+    }
 
     /* Inline icon + text alignment */
     .icon-text {
@@ -164,45 +215,45 @@
           <div class="feature-card__body">Works without internet after install. Your timetable is always there, even in dead zones.</div>
         </div>
 
-        <div class="feature-card" id="feat-countdown">
-          <div class="feature-card__accent" style="background:#7C3AED"></div>
-          <div class="feature-card__icon" style="border-color:#7C3AED; color:#7C3AED">
+        <div class="feature-card feat--purple" id="feat-countdown">
+          <div class="feature-card__accent"></div>
+          <div class="feature-card__icon">
             <i data-lucide="timer" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
           </div>
           <div class="feature-card__title">Live Countdown</div>
           <div class="feature-card__body">Second-by-second countdown for every period. Know exactly how long till the bell rings.</div>
         </div>
 
-        <div class="feature-card" id="feat-bell">
-          <div class="feature-card__accent" style="background:#059669"></div>
-          <div class="feature-card__icon" style="border-color:#059669; color:#059669">
+        <div class="feature-card feat--green" id="feat-bell">
+          <div class="feature-card__accent"></div>
+          <div class="feature-card__icon">
             <i data-lucide="bell" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
           </div>
           <div class="feature-card__title">Bell Reminders</div>
           <div class="feature-card__body">Get notified 5 minutes before class and when a period starts. Never miss a lecture.</div>
         </div>
 
-        <div class="feature-card" id="feat-fast">
-          <div class="feature-card__accent" style="background:#F59E0B"></div>
-          <div class="feature-card__icon" style="border-color:#F59E0B; color:#F59E0B">
+        <div class="feature-card feat--warning" id="feat-fast">
+          <div class="feature-card__accent"></div>
+          <div class="feature-card__icon">
             <i data-lucide="zap" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
           </div>
           <div class="feature-card__title">Instant Launch</div>
           <div class="feature-card__body">Opens in under a second. No login. No loading. No backend. Pure native speed.</div>
         </div>
 
-        <div class="feature-card" id="feat-dark">
-          <div class="feature-card__accent" style="background:#111111"></div>
-          <div class="feature-card__icon" style="border-color:#111111; color:#111111">
+        <div class="feature-card feat--dark" id="feat-dark">
+          <div class="feature-card__accent"></div>
+          <div class="feature-card__icon">
             <i data-lucide="moon" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
           </div>
           <div class="feature-card__title">Dark Mode</div>
           <div class="feature-card__body">Easy on the eyes. Persisted across sessions so it's always exactly how you left it.</div>
         </div>
 
-        <div class="feature-card" id="feat-pwa">
-          <div class="feature-card__accent" style="background:#DC2626"></div>
-          <div class="feature-card__icon" style="border-color:#DC2626; color:#DC2626">
+        <div class="feature-card feat--error" id="feat-pwa">
+          <div class="feature-card__accent"></div>
+          <div class="feature-card__icon">
             <i data-lucide="smartphone" style="width:24px;height:24px;stroke-width:2.25" aria-hidden="true"></i>
           </div>
           <div class="feature-card__title">Native App Feel</div>
@@ -223,44 +274,42 @@
 
       <div class="preview-section">
         <!-- Simulated Phone Screen -->
-        <div class="preview-device preview-device--phone" id="preview-phone" aria-label="App screenshot preview">
-          <div class="preview-device__screen">
-            <div class="preview-screen__bar"></div>
+          <div class="preview-device preview-device--phone" id="preview-phone" aria-label="App screenshot preview">
+            <div class="preview-device__screen">
+              <div class="preview-screen__bar"></div>
 
-            <!-- Date chip -->
-            <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:#888; letter-spacing:0.08em; text-transform:uppercase;">
-              FRIDAY · 10:24 AM
-            </div>
+              <!-- Date chip -->
+              <div class="preview-date-chip">FRIDAY · 10:24 AM</div>
 
-            <!-- Current period card -->
-            <div class="preview-screen__card preview-screen__card--lg" style="border-color:#2563EB; border-width:2px">
-              <div class="preview-screen__tag">NOW</div>
-              <div class="preview-screen__subject">Computer Science</div>
-              <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#aaa; margin-top:2px">Ms. Kapoor · CS Lab</div>
-              <div class="preview-screen__countdown" id="preview-countdown-display">26:35</div>
-              <div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:#888; text-align:center; text-transform:uppercase; letter-spacing:0.1em">remaining</div>
-            </div>
+              <!-- Current period card -->
+              <div class="preview-screen__card preview-screen__card--lg preview-card--active">
+                <div class="preview-screen__tag">NOW</div>
+                <div class="preview-screen__subject">Computer Science</div>
+                <div class="preview-teacher-line">Ms. Kapoor · CS Lab</div>
+                <div class="preview-screen__countdown" id="preview-countdown-display">26:35</div>
+                <div class="preview-remaining-label">remaining</div>
+              </div>
 
-            <!-- Next period -->
-            <div class="preview-screen__card preview-screen__card--sm" style="border-color:#7C3AED; border-width:2px">
-              <div class="preview-screen__tag" style="color:#7C3AED">NEXT</div>
-              <div class="preview-screen__subject" style="font-size:0.75rem">Physics · 11:00</div>
-            </div>
+              <!-- Next period -->
+              <div class="preview-screen__card preview-screen__card--sm preview-card--next">
+                <div class="preview-screen__tag preview-tag--next">NEXT</div>
+                <div class="preview-screen__subject" style="font-size:0.75rem">Physics · 11:00</div>
+              </div>
 
-            <!-- Nav bar — Lucide icons -->
-            <div style="display:flex; justify-content:space-around; border-top:1px solid #333; padding-top:6px; margin-top:auto">
-              <span class="preview-nav-icon preview-nav-icon--active">
-                <i data-lucide="house" style="width:16px;height:16px;stroke-width:2.25"></i>
-              </span>
-              <span class="preview-nav-icon">
-                <i data-lucide="calendar" style="width:16px;height:16px;stroke-width:2.25"></i>
-              </span>
-              <span class="preview-nav-icon">
-                <i data-lucide="settings" style="width:16px;height:16px;stroke-width:2.25"></i>
-              </span>
+              <!-- Nav bar — Lucide icons -->
+              <div class="preview-nav-bar">
+                <span class="preview-nav-icon preview-nav-icon--active">
+                  <i data-lucide="house" style="width:16px;height:16px;stroke-width:2.25"></i>
+                </span>
+                <span class="preview-nav-icon">
+                  <i data-lucide="calendar" style="width:16px;height:16px;stroke-width:2.25"></i>
+                </span>
+                <span class="preview-nav-icon">
+                  <i data-lucide="settings" style="width:16px;height:16px;stroke-width:2.25"></i>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
         <!-- Feature list -->
         <div class="preview-text">

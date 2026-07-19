@@ -1,28 +1,61 @@
 /* ============================================================
    brutal.css — Brutalist Design System for TimeTab
+   All colors go through CSS custom properties only.
+   Hardcoded color values appear ONLY inside token definitions.
    ============================================================ */
 
 /* ---- Typography Import ---- */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-/* ---- Design Tokens ---- */
+/* ================================================================
+   LIGHT MODE TOKENS  (default)
+   ================================================================ */
 :root {
-  /* Colors */
-  --color-primary:   #2563EB;
-  --color-primary-dark: #1D4ED8;
-  --color-primary-light: #3B82F6;
-  --color-bg:        #F5F5F5;
-  --color-bg-alt:    #ECECEC;
-  --color-dark:      #111111;
-  --color-black:     #000000;
-  --color-white:     #FFFFFF;
-  --color-border:    #000000;
-  --color-muted:     #555555;
-  --color-surface:   #FFFFFF;
-  --color-surface-alt: #F0F0F0;
-  --color-error:     #DC2626;
-  --color-success:   #059669;
-  --color-warning:   #F59E0B;
+  /* --- Brand --- */
+  --color-primary:        #2563EB;
+  --color-primary-dark:   #1D4ED8;
+  --color-primary-light:  #3B82F6;
+
+  /* --- Semantic palette (accent colours used across the UI) --- */
+  --color-purple:         #7C3AED;
+  --color-green:          #059669;
+  --color-warning:        #F59E0B;
+  --color-error:          #DC2626;
+  --color-success:        #059669;
+
+  /* --- Backgrounds --- */
+  --color-bg:             #F5F5F5;
+  --color-bg-alt:         #ECECEC;
+
+  /* --- Surfaces (cards, panels) --- */
+  --color-surface:        #FFFFFF;
+  --color-surface-alt:    #F0F0F0;
+
+  /* --- Text --- */
+  --color-text:           #111111;   /* body text, headings  */
+  --color-text-inv:       #FFFFFF;   /* text on dark/accent  */
+  --color-muted:          #555555;   /* secondary/muted text */
+
+  /* --- Borders --- */
+  --color-border:         #000000;
+
+  /* --- Aliases for backward compat / semantic clarity --- */
+  --color-dark:           var(--color-text);
+  --color-black:          #000000;
+  --color-white:          #FFFFFF;
+
+  /* --- Modal overlay --- */
+  --color-overlay:        rgba(0, 0, 0, 0.60);
+
+  /* --- Preview/placeholder muted --- */
+  --color-muted-preview:  #888888;
+
+  /* --- Dark-card accent (footer, .b-card--accent) --- */
+  --color-dark-surface:   #111111;
+  --color-dark-text:      #FFFFFF;
+
+  /* --- b-btn--dark shadow --- */
+  --color-btn-dark-shadow: #333333;
 
   /* Typography */
   --font-display:    'Space Grotesk', sans-serif;
@@ -60,23 +93,57 @@
   --z-toast:   300;
 }
 
-/* ---- Dark Mode Tokens ---- */
+/* ================================================================
+   DARK MODE TOKENS
+   Only override what changes — everything else inherits from :root.
+   ================================================================ */
 [data-theme="dark"] {
-  --color-bg:        #111111;
-  --color-bg-alt:    #1A1A1A;
-  --color-dark:      #F5F5F5;
-  --color-black:     #FFFFFF;
-  --color-border:    #FFFFFF;
-  --color-muted:     #AAAAAA;
-  --color-surface:   #1A1A1A;
-  --color-surface-alt: #222222;
+  /* Backgrounds */
+  --color-bg:             #111111;
+  --color-bg-alt:         #1A1A1A;
+
+  /* Surfaces */
+  --color-surface:        #1A1A1A;
+  --color-surface-alt:    #222222;
+
+  /* Text */
+  --color-text:           #F5F5F5;
+  --color-text-inv:       #111111;
+  --color-muted:          #AAAAAA;
+
+  /* Borders */
+  --color-border:         #FFFFFF;
+
+  /* Aliases */
+  --color-dark:           var(--color-text);
+  --color-black:          #FFFFFF;
+  --color-white:          #111111;
+
+  /* Modal overlay — slightly lighter so cards still pop */
+  --color-overlay:        rgba(0, 0, 0, 0.75);
+
+  /* Preview muted */
+  --color-muted-preview:  #666666;
+
+  /* Dark-card accent becomes the surface in dark mode */
+  --color-dark-surface:   #000000;
+  --color-dark-text:      #F5F5F5;
+
+  /* b-btn--dark shadow */
+  --color-btn-dark-shadow: #555555;
+
+  /* Recompute border shorthands so they pick up the new --color-border */
   --border-thin:     1.5px solid var(--color-border);
   --border-base:     2px solid var(--color-border);
   --border-thick:    3px solid var(--color-border);
   --border-bolder:   4px solid var(--color-border);
 }
 
-/* ---- Brutalist Card ---- */
+/* ================================================================
+   BRUTALIST COMPONENTS
+   ================================================================ */
+
+/* ---- Card ---- */
 .b-card {
   background: var(--color-surface);
   border: var(--border-thick);
@@ -97,16 +164,16 @@
 
 .b-card--primary {
   background: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-text-inv);
   border-color: var(--color-primary-dark);
 }
 
 .b-card--accent {
-  background: var(--color-dark);
-  color: var(--color-white);
+  background: var(--color-dark-surface);
+  color: var(--color-dark-text);
 }
 
-/* ---- Brutalist Button ---- */
+/* ---- Button ---- */
 .b-btn {
   display: inline-flex;
   align-items: center;
@@ -122,8 +189,8 @@
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-snap),
               box-shadow var(--dur-fast) var(--ease-snap);
-  background: var(--color-white);
-  color: var(--color-black);
+  background: var(--color-surface);
+  color: var(--color-text);
   text-decoration: none;
   white-space: nowrap;
   box-shadow: 3px 3px 0 var(--color-border);
@@ -143,7 +210,7 @@
 
 .b-btn--primary {
   background: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-text-inv);
   border-color: var(--color-primary-dark);
   box-shadow: 3px 3px 0 var(--color-primary-dark);
 }
@@ -153,10 +220,10 @@
 }
 
 .b-btn--dark {
-  background: var(--color-dark);
-  color: var(--color-white);
-  border-color: var(--color-black);
-  box-shadow: 3px 3px 0 #333;
+  background: var(--color-dark-surface);
+  color: var(--color-dark-text);
+  border-color: var(--color-border);
+  box-shadow: 3px 3px 0 var(--color-btn-dark-shadow);
 }
 
 .b-btn--lg {
@@ -176,7 +243,7 @@
   box-shadow: 2px 2px 0 var(--color-border);
 }
 
-/* ---- Brutalist Badge ---- */
+/* ---- Badge ---- */
 .b-badge {
   display: inline-block;
   font-family: var(--font-mono);
@@ -187,13 +254,13 @@
   padding: 2px var(--sp-2);
   border: var(--border-thin);
   background: var(--color-surface);
-  color: var(--color-dark);
+  color: var(--color-text);
 }
 
-.b-badge--primary { background: var(--color-primary); color: #fff; border-color: var(--color-primary-dark); }
-.b-badge--dark    { background: var(--color-dark); color: #fff; }
+.b-badge--primary { background: var(--color-primary); color: var(--color-text-inv); border-color: var(--color-primary-dark); }
+.b-badge--dark    { background: var(--color-dark-surface); color: var(--color-dark-text); border-color: var(--color-border); }
 
-/* ---- Brutalist Label ---- */
+/* ---- Label ---- */
 .b-label {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -203,14 +270,14 @@
   color: var(--color-muted);
 }
 
-/* ---- Brutalist Divider ---- */
+/* ---- Divider ---- */
 .b-divider {
   border: none;
   border-top: var(--border-base);
   margin: var(--sp-6) 0;
 }
 
-/* ---- Brutalist Toggle ---- */
+/* ---- Toggle ---- */
 .b-toggle {
   position: relative;
   width: 52px;
@@ -245,16 +312,16 @@
   left: 3px;
   width: 18px;
   height: 18px;
-  background: var(--color-black);
+  background: var(--color-border);   /* adapts: black in light, white in dark */
   transition: transform var(--dur-base) var(--ease-snap);
 }
 
 .b-toggle input:checked ~ .b-toggle__thumb {
   transform: translateX(24px);
-  background: var(--color-white);
+  background: var(--color-text-inv); /* white in light, near-black in dark */
 }
 
-/* ---- Brutalist Tag ---- */
+/* ---- Tag ---- */
 .b-tag {
   display: inline-block;
   font-family: var(--font-mono);
@@ -266,30 +333,23 @@
   border: 1.5px solid currentColor;
 }
 
-/* ---- Typography Utilities ---- */
-.t-display {
-  font-family: var(--font-display);
-  font-weight: 800;
-}
+/* ================================================================
+   TYPOGRAPHY UTILITIES
+   ================================================================ */
+.t-display { font-family: var(--font-display); font-weight: 800; }
+.t-mono    { font-family: var(--font-mono); }
+.t-body    { font-family: var(--font-body); }
 
-.t-mono {
-  font-family: var(--font-mono);
-}
-
-.t-body {
-  font-family: var(--font-body);
-}
-
-.t-xs   { font-size: 0.7rem;  }
-.t-sm   { font-size: 0.85rem; }
-.t-base { font-size: 1rem;    }
-.t-lg   { font-size: 1.125rem;}
-.t-xl   { font-size: 1.25rem; }
-.t-2xl  { font-size: 1.5rem;  }
-.t-3xl  { font-size: 1.875rem;}
-.t-4xl  { font-size: 2.25rem; }
-.t-5xl  { font-size: 3rem;    }
-.t-6xl  { font-size: 3.75rem; }
+.t-xs   { font-size: 0.7rem;   }
+.t-sm   { font-size: 0.85rem;  }
+.t-base { font-size: 1rem;     }
+.t-lg   { font-size: 1.125rem; }
+.t-xl   { font-size: 1.25rem;  }
+.t-2xl  { font-size: 1.5rem;   }
+.t-3xl  { font-size: 1.875rem; }
+.t-4xl  { font-size: 2.25rem;  }
+.t-5xl  { font-size: 3rem;     }
+.t-6xl  { font-size: 3.75rem;  }
 
 .fw-400 { font-weight: 400; }
 .fw-500 { font-weight: 500; }
@@ -300,9 +360,11 @@
 
 .text-primary { color: var(--color-primary); }
 .text-muted   { color: var(--color-muted);   }
-.text-dark    { color: var(--color-dark);    }
+.text-dark    { color: var(--color-text);    }
 
-/* ---- Spacing Utilities ---- */
+/* ================================================================
+   SPACING UTILITIES
+   ================================================================ */
 .mt-1 { margin-top: var(--sp-1); }
 .mt-2 { margin-top: var(--sp-2); }
 .mt-3 { margin-top: var(--sp-3); }

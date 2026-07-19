@@ -250,7 +250,7 @@
 
 .preview-screen__card {
   background: var(--color-surface);
-  border: 2px solid #fff;
+  border: var(--border-base);
   padding: var(--sp-3);
   flex-shrink: 0;
 }
@@ -357,8 +357,8 @@
 .footer {
   border-top: var(--border-thick);
   padding: var(--sp-8) var(--sp-5);
-  background: var(--color-dark);
-  color: var(--color-white);
+  background: var(--color-dark-surface);
+  color: var(--color-dark-text);
 }
 
 .footer__inner {
@@ -382,7 +382,7 @@
 .footer__meta {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: #888;
+  color: var(--color-muted);
   letter-spacing: 0.04em;
 }
 
