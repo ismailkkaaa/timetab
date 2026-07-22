@@ -1,61 +1,55 @@
 {
   "schedule": {
     "monday": [
-      { "id": "m1", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "08:00", "end": "08:50", "color": "#2563EB", "room": "A101" },
-      { "id": "m2", "subject": "Physics", "teacher": "Prof. Mehta", "start": "09:00", "end": "09:50", "color": "#7C3AED", "room": "Lab 2" },
-      { "id": "m3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
-      { "id": "m4", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "10:10", "end": "11:00", "color": "#059669", "room": "CS Lab" },
-      { "id": "m5", "subject": "English", "teacher": "Dr. Nair", "start": "11:00", "end": "11:50", "color": "#DC2626", "room": "B202" },
-      { "id": "m6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
-      { "id": "m7", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "12:40", "end": "13:30", "color": "#0891B2", "room": "Chem Lab" },
-      { "id": "m8", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "13:30", "end": "14:20", "color": "#EA580C", "room": "Ground" }
+      { "id": "m1", "subject": "Media Technology & Automation (L)", "teacher": "Vinoy",   "start": "09:00", "end": "09:55", "color": "#A855F7", "room": "Lab" },
+      { "id": "m2", "subject": "English",                              "teacher": "",       "start": "09:55", "end": "10:50", "color": "#6B7280", "room": "" },
+      { "id": "m3", "subject": "The Art & Science Behind the Lens",   "teacher": "Prasoon","start": "10:50", "end": "11:45", "color": "#84CC16", "room": "" },
+      { "id": "m-lunch", "subject": "LUNCH", "teacher": "", "start": "11:45", "end": "12:30", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "m4", "subject": "Media Technology & Automation (L)",   "teacher": "Vinoy",   "start": "12:30", "end": "13:25", "color": "#A855F7", "room": "Lab" },
+      { "id": "m5", "subject": "Sketching & Layout in Media",         "teacher": "Vinoy",   "start": "13:25", "end": "14:20", "color": "#EC4899", "room": "" },
+      { "id": "m6", "subject": "Sketching & Layout in Media",         "teacher": "Vinoy",   "start": "14:20", "end": "15:15", "color": "#EC4899", "room": "" }
     ],
     "tuesday": [
-      { "id": "t1", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "08:00", "end": "08:50", "color": "#059669", "room": "CS Lab" },
-      { "id": "t2", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "09:00", "end": "09:50", "color": "#2563EB", "room": "A101" },
-      { "id": "t3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
-      { "id": "t4", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "10:10", "end": "11:00", "color": "#0891B2", "room": "Chem Lab" },
-      { "id": "t5", "subject": "Physics", "teacher": "Prof. Mehta", "start": "11:00", "end": "11:50", "color": "#7C3AED", "room": "Lab 2" },
-      { "id": "t6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
-      { "id": "t7", "subject": "English", "teacher": "Dr. Nair", "start": "12:40", "end": "13:30", "color": "#DC2626", "room": "B202" },
-      { "id": "t8", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "13:30", "end": "14:20", "color": "#2563EB", "room": "A101" }
+      { "id": "t1", "subject": "Communicative English",               "teacher": "",        "start": "09:00", "end": "09:55", "color": "#DB2777", "room": "" },
+      { "id": "t2", "subject": "Sketching & Layout in Media",         "teacher": "Vinoy",   "start": "09:55", "end": "10:50", "color": "#EC4899", "room": "" },
+      { "id": "t3", "subject": "Creative Media",                      "teacher": "Avinash", "start": "10:50", "end": "11:45", "color": "#22C55E", "room": "" },
+      { "id": "t-lunch", "subject": "LUNCH", "teacher": "", "start": "11:45", "end": "12:30", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "t4", "subject": "Media Design & Development Tool",     "teacher": "Santhosh","start": "12:30", "end": "13:25", "color": "#EAB308", "room": "" },
+      { "id": "t5", "subject": "Media Design & Development Tool",     "teacher": "Santhosh","start": "13:25", "end": "14:20", "color": "#EAB308", "room": "" },
+      { "id": "t6", "subject": "The Art & Science Behind the Lens",   "teacher": "Prasoon", "start": "14:20", "end": "15:15", "color": "#84CC16", "room": "" }
     ],
     "wednesday": [
-      { "id": "w1", "subject": "English", "teacher": "Dr. Nair", "start": "08:00", "end": "08:50", "color": "#DC2626", "room": "B202" },
-      { "id": "w2", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "09:00", "end": "09:50", "color": "#0891B2", "room": "Chem Lab" },
-      { "id": "w3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
-      { "id": "w4", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "10:10", "end": "11:00", "color": "#2563EB", "room": "A101" },
-      { "id": "w5", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "11:00", "end": "11:50", "color": "#059669", "room": "CS Lab" },
-      { "id": "w6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
-      { "id": "w7", "subject": "Physics", "teacher": "Prof. Mehta", "start": "12:40", "end": "13:30", "color": "#7C3AED", "room": "Lab 2" },
-      { "id": "w8", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "13:30", "end": "14:20", "color": "#EA580C", "room": "Ground" }
+      { "id": "w1", "subject": "Media Technology & Automation",       "teacher": "Vinoy",    "start": "09:00", "end": "09:55", "color": "#A855F7", "room": "" },
+      { "id": "w2", "subject": "Introduction to Acting & Media Perf.","teacher": "Gayathri", "start": "09:55", "end": "10:50", "color": "#3B82F6", "room": "" },
+      { "id": "w3", "subject": "Sketching & Layout in Media",         "teacher": "Vinoy",    "start": "10:50", "end": "11:45", "color": "#EC4899", "room": "" },
+      { "id": "w-lunch", "subject": "LUNCH", "teacher": "", "start": "11:45", "end": "12:30", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "w4", "subject": "English",                             "teacher": "",         "start": "12:30", "end": "13:25", "color": "#6B7280", "room": "" },
+      { "id": "w5", "subject": "The Art & Science Behind the Lens",   "teacher": "Prasoon",  "start": "13:25", "end": "14:20", "color": "#84CC16", "room": "" },
+      { "id": "w6", "subject": "Creative Media",                      "teacher": "Avinash",  "start": "14:20", "end": "15:15", "color": "#22C55E", "room": "" }
     ],
     "thursday": [
-      { "id": "th1", "subject": "Physics", "teacher": "Prof. Mehta", "start": "08:00", "end": "08:50", "color": "#7C3AED", "room": "Lab 2" },
-      { "id": "th2", "subject": "English", "teacher": "Dr. Nair", "start": "09:00", "end": "09:50", "color": "#DC2626", "room": "B202" },
-      { "id": "th3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
-      { "id": "th4", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "10:10", "end": "11:00", "color": "#EA580C", "room": "Ground" },
-      { "id": "th5", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "11:00", "end": "11:50", "color": "#0891B2", "room": "Chem Lab" },
-      { "id": "th6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
-      { "id": "th7", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "12:40", "end": "13:30", "color": "#2563EB", "room": "A101" },
-      { "id": "th8", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "13:30", "end": "14:20", "color": "#059669", "room": "CS Lab" }
+      { "id": "th1", "subject": "Media Design & Development Tool",    "teacher": "Santhosh", "start": "09:00", "end": "09:55", "color": "#EAB308", "room": "" },
+      { "id": "th2", "subject": "Introduction to Acting & Media Perf.","teacher": "Gayathri","start": "09:55", "end": "10:50", "color": "#3B82F6", "room": "" },
+      { "id": "th3", "subject": "English",                            "teacher": "",         "start": "10:50", "end": "11:45", "color": "#6B7280", "room": "" },
+      { "id": "th-lunch", "subject": "LUNCH", "teacher": "", "start": "11:45", "end": "12:30", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "th4", "subject": "Media Technology & Automation",      "teacher": "Vinoy",    "start": "12:30", "end": "13:25", "color": "#A855F7", "room": "" },
+      { "id": "th5", "subject": "Media Design & Development Tool",    "teacher": "Santhosh", "start": "13:25", "end": "14:20", "color": "#EAB308", "room": "" },
+      { "id": "th6", "subject": "The Art & Science Behind the Lens",  "teacher": "Prasoon",  "start": "14:20", "end": "15:15", "color": "#84CC16", "room": "" }
     ],
     "friday": [
-      { "id": "f1", "subject": "Chemistry", "teacher": "Prof. Joshi", "start": "08:00", "end": "08:50", "color": "#0891B2", "room": "Chem Lab" },
-      { "id": "f2", "subject": "Computer Science", "teacher": "Ms. Kapoor", "start": "09:00", "end": "09:50", "color": "#059669", "room": "CS Lab" },
-      { "id": "f3", "subject": "BREAK", "teacher": "", "start": "09:50", "end": "10:10", "color": "#D1D5DB", "room": "", "type": "break" },
-      { "id": "f4", "subject": "Physics", "teacher": "Prof. Mehta", "start": "10:10", "end": "11:00", "color": "#7C3AED", "room": "Lab 2" },
-      { "id": "f5", "subject": "Mathematics", "teacher": "Dr. Sharma", "start": "11:00", "end": "11:50", "color": "#2563EB", "room": "A101" },
-      { "id": "f6", "subject": "LUNCH", "teacher": "", "start": "11:50", "end": "12:40", "color": "#F59E0B", "room": "", "type": "lunch" },
-      { "id": "f7", "subject": "English", "teacher": "Dr. Nair", "start": "12:40", "end": "13:30", "color": "#DC2626", "room": "B202" },
-      { "id": "f8", "subject": "Physical Education", "teacher": "Mr. Rao", "start": "13:30", "end": "14:20", "color": "#EA580C", "room": "Ground" }
+      { "id": "f1", "subject": "Media Design & Development Tool",     "teacher": "Santhosh", "start": "09:00", "end": "09:55", "color": "#EAB308", "room": "" },
+      { "id": "f2", "subject": "Creative Media",                      "teacher": "Avinash",  "start": "09:55", "end": "10:50", "color": "#22C55E", "room": "" },
+      { "id": "f3", "subject": "English",                             "teacher": "",         "start": "10:50", "end": "11:45", "color": "#6B7280", "room": "" },
+      { "id": "f-lunch", "subject": "LUNCH", "teacher": "", "start": "11:45", "end": "12:30", "color": "#F59E0B", "room": "", "type": "lunch" },
+      { "id": "f4", "subject": "The Art & Science Behind the Lens",   "teacher": "Prasoon",  "start": "12:30", "end": "13:25", "color": "#84CC16", "room": "" },
+      { "id": "f5", "subject": "Introduction to Acting & Media Perf.","teacher": "Gayathri", "start": "13:25", "end": "14:20", "color": "#3B82F6", "room": "" },
+      { "id": "f6", "subject": "Introduction to Acting & Media Perf.","teacher": "Gayathri", "start": "14:20", "end": "15:15", "color": "#3B82F6", "room": "" }
     ]
   },
   "meta": {
-    "institution": "TimeTab College",
+    "institution": "First Semester B.VOC Multimedia",
     "semester": "Semester 1 — 2026",
-    "periodDuration": 50,
-    "breakDuration": 20,
-    "lunchDuration": 50
+    "periodDuration": 55,
+    "lunchDuration": 45
   }
 }
